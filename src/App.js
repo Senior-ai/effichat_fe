@@ -7,7 +7,7 @@ import { logout } from "./features/userSlice";
 function App() {;
   const {user} = useSelector((state) => state.user);
   return (
-    <div>
+    <div className="">
       <Router>
         <Routes>
           <Route exact path="/" element={<Home />} />
