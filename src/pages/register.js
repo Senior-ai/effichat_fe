@@ -1,6 +1,6 @@
 import React from "react";
 import RegisterForm from "../components/auth/RegisterForm";
-import Logo from '../svg/logo512.png'
+import Logo from "../svg/logo512.png";
 export default function Register() {
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center overflow-hidden">
@@ -8,12 +8,18 @@ export default function Register() {
         <div class="lg:w-1/2 xl:w-5/12 p-4 sm:p-12">
           {/* Logo Header */}
           <div className="flex flex-col items-center">
-            <img
-              src={Logo}
-              alt="Logo"
-              className="w-32 mx-auto"
-            />
+            <img src={Logo} alt="Logo" className="w-32 mx-auto" />
             <h1 className="text-xl xl:text-3xl font-bold">EffiChat</h1>
+            <p class="mt-2 text-center text-sm text-gray-600 max-w">
+              Already have an account?
+              <a
+                href="/login"
+                class="font-medium text-blue-600 hover:text-blue-500"
+              >
+                {" "}
+                Sign in
+              </a>
+            </p>
           </div>
           {/*Register Form*/}
           <RegisterForm />
