@@ -23,9 +23,9 @@ export default function RegisterForm() {
             {/* Container */}
             <div class="w-full flex-1 mt-4">
                 {/* 3rd party Buttons */}
-                <div className="flex flex-col items-center">
-                    <GoogleButton />
-                    <GithubButton />
+                <div className="flex flex-col items-center justify-between space-y-3">
+                    <GoogleButton text='Sign Up with Google'/>
+                    <GithubButton text='Sign Up with GitHub' />
                 </div>
                 {/* Form */}
                 <form onSubmit={handleSubmit(onSubmit)}>

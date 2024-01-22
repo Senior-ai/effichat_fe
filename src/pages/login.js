@@ -1,15 +1,30 @@
 import React from "react";
 import LoginForm from "../components/auth/LoginForm";
 
-
 export default function Login() {
-    return (
-        <div className="h-screen dark:bg-dark_bg_1 flex items-center justify-center py-[19px] overflow-hidden">
-            {/*Container*/}
-            <div className="flex w-[1600px] mx-auto h-full">
-                {/*Login Form*/}
-                <LoginForm/>
-            </div>
-        </div>
-    );
+  return (
+    <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8 overflow-hidden">
+      {/* Header */}
+      <div class="sm:mx-auto sm:w-full sm:max-w-md">
+        <h1 class="mt-6 text-center text-3xl font-bold text-gray-900">
+          Sign in to your account
+        </h1>
+        <p class="mt-2 text-center text-sm text-gray-600 max-w">
+          Or
+          <a
+            href="/register"
+            class="font-medium text-blue-600 hover:text-blue-500"
+          >
+            {" "}
+            create an account
+          </a>
+        </p>
+      </div>
+      {/*Container*/}
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        {/*Login Form*/}
+        <LoginForm />
+      </div>
+    </div>
+  );
 }

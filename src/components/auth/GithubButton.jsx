@@ -1,6 +1,6 @@
-export default function GithubButton() {
+export default function GithubButton({context, text}) {
     return (<button
-        class="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5">
+        class="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline">
         <div class="bg-white p-1 rounded-full">
             <svg class="w-6" viewBox="0 0 32 32">
                 <path fill-rule="evenodd"
@@ -8,7 +8,7 @@ export default function GithubButton() {
             </svg>
         </div>
         <span class="ml-4">
-            Sign Up with GitHub
+            {text}
         </span>
     </button>)
 }
