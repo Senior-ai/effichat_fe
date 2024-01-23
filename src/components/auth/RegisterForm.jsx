@@ -4,10 +4,14 @@ import { signUpSchema } from "../../utils/validation";
 import AuthInput from './AuthInput';
 import GoogleButton from './GoogleButton';
 import GithubButton from './GithubButton';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {PulseLoader} from 'react-spinners';
+import {useNavigate} from 'react-router-dom'
+import { registerUser } from '../../features/userSlice';
 export default function RegisterForm() {
-    const {status} = useSelector((state) => state.user);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const {status, error} = useSelector((state) => state.user);
     const {
         register,
         handleSubmit,
@@ -16,7 +20,12 @@ export default function RegisterForm() {
     } = useForm({
         resolver: yupResolver(signUpSchema),
     });
-    const onSubmit = (data) => console.log(data);
+    const onSubmit = async(data) => {
+        let res = await dispatch(registerUser({...data, picture: ''}));
+        console.log(res);
+        if (status === 'succeeded') {
+            navigate('/')}
+    };
     return (
         <div className="mt-6 flex flex-col items-center">
             {/* Heading */}
@@ -55,6 +64,9 @@ export default function RegisterForm() {
                             name="Status" type="text" placeholder="Status - optional"
                             register={register} error={errors?.status?.message}
                         />
+                        {error? <div>
+                            <p className='text-red-400'>{error}</p>
+                        </div> : null}
                         <button type='submit'
                             className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
                             <svg className="w-6 h-6 -ml-2" fill="none" stroke="currentColor" strokeWidth="2"
