@@ -1,4 +1,4 @@
-import * as Yup from 'yup';
+import * as Yup from "yup";
 
 export const signUpSchema = Yup.object({
   name: Yup.string()
@@ -18,4 +18,9 @@ export const signUpSchema = Yup.object({
     ),
 });
 
-export const signInSchema = Yup.object({})
+export const signInSchema = Yup.object({
+  email: Yup.string()
+    .required("Email address is required.")
+    .email("Invalid email address."),
+  password: Yup.string().required("Password is required."),
+});

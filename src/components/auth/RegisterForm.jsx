@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { signUpSchema } from "../../utils/validation";
 import AuthInput from './AuthInput';
@@ -7,11 +8,19 @@ import GithubButton from './GithubButton';
 import { useDispatch, useSelector } from 'react-redux';
 import {PulseLoader} from 'react-spinners';
 import {useNavigate} from 'react-router-dom'
-import { registerUser } from '../../features/userSlice';
+import { registerUser, changeStatus } from '../../features/userSlice';
+import axios from 'axios';
+import Picture from './Picture';
+
+const cloudSecret = process.env.REACT_APP_CLOUD_SECRET;
+const cloudName = process.env.REACT_APP_CLOUD_NAME;
+
 export default function RegisterForm() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {status, error} = useSelector((state) => state.user);
+    const [picture, setPicture] = useState();
+    const [readablePicture, setReadablePicture] = useState();
     const {
         register,
         handleSubmit,
@@ -20,12 +29,33 @@ export default function RegisterForm() {
     } = useForm({
         resolver: yupResolver(signUpSchema),
     });
+
     const onSubmit = async(data) => {
-        let res = await dispatch(registerUser({...data, picture: ''}));
+        let res;
+        dispatch(changeStatus('loading'))
+        if (picture) {
+            //upload to cloudinary and then register user
+            await uploadImage().then(async (cloudRes) => {
+                res = await dispatch(registerUser({...data, picture: cloudRes.secure_url}));
+            });
+        } else {
+            res = await dispatch(registerUser({...data, picture: ''}));
+        }
         console.log(res);
-        if (status === 'succeeded') {
-            navigate('/')}
+        if (res?.payload?.user) {
+            navigate('/')
+        }
     };
+    
+    const uploadImage = async() => {
+        let formData = new FormData();
+        formData.append('upload_preset', cloudSecret);
+        formData.append('file', picture);
+        const {data} = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, formData);
+        console.log(data);
+        return data;
+    }
+
     return (
         <div className="mt-6 flex flex-col items-center">
             {/* Heading */}
@@ -61,9 +91,11 @@ export default function RegisterForm() {
                             register={register} error={errors?.password?.message}
                         />
                         <AuthInput
-                            name="Status" type="text" placeholder="Status - optional"
+                            name="Status" type="text" placeholder="Status (Optional)"
                             register={register} error={errors?.status?.message}
                         />
+                        <Picture readablePicture={readablePicture} setReadablePicture={setReadablePicture} setPicture={setPicture}/>
+                        {/* If we have an error */}
                         {error? <div>
                             <p className='text-red-400'>{error}</p>
                         </div> : null}
