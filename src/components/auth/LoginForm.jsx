@@ -16,16 +16,13 @@ export default function LoginForm() {
     const {
         register,
         handleSubmit,
-        watch,
         formState: { errors },
     } = useForm({
         resolver: yupResolver(signInSchema),
     });
     const onSubmit = async (data) => {
-        console.log(data);
         dispatch(changeStatus("loading"));
         let res = await dispatch(loginUser({ ...data }))
-        console.log(res);
         if (res?.payload?.user) {
             navigate('/');
         }

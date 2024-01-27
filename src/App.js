@@ -8,10 +8,11 @@ import { logout } from "./features/userSlice";
 
 function App() {
   const { user } = useSelector((state) => state.user);
-  const {token} = user;
+  const token = user.access_token;
+  
   return (
     <GoogleOAuthProvider clientId='519818168820-ur4sjskhrpkv7kkdhidlipgpdvcdeh93.apps.googleusercontent.com'> 
-    //TODO - Make sure to change it to process.env,var and implement a way to register the user to db
+    {/* //TODO - Make sure to change it to process.env,var and implement a way to register the user to db */}
       <div className="">
         <Router>
           <Routes>
