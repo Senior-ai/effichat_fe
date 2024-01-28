@@ -12,17 +12,21 @@ const initialState = {
 
 }
 
-export const getConversations = createAsyncThunk('conversation/all', async(token, {rejectWithValue}) => {
-    try {
-        const {data}  = await axios.get(CONVERSATION_ENDPOINT, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
+export const getConversations = createAsyncThunk(
+    "conervsation/all",
+    async (token, { rejectWithValue }) => {
+      try {
+        const { data } = await axios.get(CONVERSATION_ENDPOINT, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
-    } catch (error) {
-        return rejectWithValue(error.response.data.error.message)
+        return data;
+      } catch (error) {
+        return rejectWithValue(error.response.data.error.message);
+      }
     }
-})
+  );
 
 export const chatSlice = createSlice({
     name: 'chat',
@@ -38,7 +42,7 @@ export const chatSlice = createSlice({
         })
         .addCase(getConversations.fulfilled,(state, action) => {
             state.status='succeeded';
-            state.user= action.payload.user;
+            state.conversations = action.payload;
          })
          .addCase(getConversations.rejected,(state, action) => {
             state.status='failed';
@@ -47,6 +51,6 @@ export const chatSlice = createSlice({
     }
 });
 
-export const {} = chatSlice.actions;
+export const {setActiveConversation} = chatSlice.actions;
 
 export default chatSlice.reducer;

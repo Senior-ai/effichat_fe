@@ -21,6 +21,9 @@ export default function LoginForm() {
         resolver: yupResolver(signInSchema),
     });
     const onSubmit = async (data) => {
+        if (error) {
+            error = ''
+        }
         dispatch(changeStatus("loading"));
         let res = await dispatch(loginUser({ ...data }))
         if (res?.payload?.user) {
@@ -63,7 +66,7 @@ export default function LoginForm() {
                     <button type="submit"
                         className="mt-2 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-2 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
                         <span className="ml-3">
-                            {status === 'load' ? <PulseLoader color="#fff" size={10} /> : 'Sign in'}
+                            {status === 'loading' ? <PulseLoader color="#fff" size={10} /> : 'Sign in'}
                         </span>
                     </button>
                 </div>
