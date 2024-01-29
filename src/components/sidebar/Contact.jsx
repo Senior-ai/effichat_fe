@@ -1,8 +1,22 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { openCreateConversation } from '../../features/chatSlice';
 
 export default function Contact({ contact }) {
+    const dispatch = useDispatch();
+    const {user} = useSelector((state) => state.user);
+    console.log(contact);
+    const values = {
+        receiverId: contact._id,
+        token: user.token,
+    }
+    const openConversation = () => {
+        dispatch(openCreateConversation(values));
+    }
     return (
-        <li className='list-none h-[72px] w-full p-3 hover:bg-blue-800 bg-blue-700 cursor-pointer text-white'>
+        <li 
+        onClick={() => openConversation()}
+        className='list-none h-[72px] w-full p-3 hover:bg-blue-800 bg-blue-700 cursor-pointer text-white'>
             <div className='relative w-full flex items-center justify-between'>
                 {/* Left side */}
                 <div className="flex items-center gap-x-3">
@@ -23,10 +37,7 @@ export default function Contact({ contact }) {
                     </div>
                 </div>
             </div>
-            <div>
-                <span className="mt-2 w-full border-b-2 border-b-blue-800"></span>
-
-            </div>
+                <hr className="mt-2 ml-4 w-64 border-b-blue-800 border-t-blue-800"></hr>
         </li>
     )
 }

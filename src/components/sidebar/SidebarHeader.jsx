@@ -1,6 +1,10 @@
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
-import {ChatIcon, CommunityIcon, DotsIcon, StoryIcon} from '../../svg';
+import { ChatIcon, DotsIcon, StoryIcon } from '../../svg';
+import { BsDot } from 'react-icons/bs';
+import {GrGroup} from 'react-icons/gr';
+
+import Menu from './Menu'
 
 export default function SidebarHeader() {
     const { user } = useSelector((state) => state.user);
@@ -12,30 +16,36 @@ export default function SidebarHeader() {
                 {/* Container */}
                 <div className='w-full flex items-center justify-between'>
                     {/* User img */}
-                    <button className='btn-2'>
-                        <img src={user.picture} alt={user.name} className='w-full h-full rounded-full object-cover' />
-                    </button>
+                    <div className='items-center flex relative'>
+                        <button className='btn-2'>
+                            <img src={user.picture} alt={user.name} className='w-5/6 h-5/6 rounded-full object-cover' />
+                        </button>
+                        <BsDot color='lightGreen' size={32} className='absolute bottom-1.5 right-2 transform translate-x-1/2 translate-y-1/2' />
+                    </div>
                     {/* user icons */}
                     <ul className='flex items-center gap-x-2.5'>
                         <li>
                             <button className="btn-2">
-                                <CommunityIcon className='dark:fill-dark_svg_1 fill-white'/>
+                                <GrGroup color='white' size={20} className='dark:fill-dark_svg_1 fill-white' />
                             </button>
                         </li>
                         <li>
                             <button className="btn-2">
-                                <StoryIcon className='dark:fill-dark_svg_1 fill-white'/>
+                                <StoryIcon className='dark:fill-dark_svg_1 fill-white' />
                             </button>
                         </li>
                         <li>
                             <button className="btn-2">
-                                <ChatIcon className='dark:fill-dark_svg_1 fill-white'/>
+                                <ChatIcon className='dark:fill-dark_svg_1 fill-white' />
                             </button>
                         </li>
-                        <li>
-                            <button className="btn-2">
-                                <DotsIcon className='dark:fill-dark_svg_1 fill-white'/>
+                        <li className='relative' onClick={() => setShowMenu((prev) => !prev)} >
+                            <button className={`btn-2 ${showMenu ? "bg-dark_hover_1" : ""}`}>
+                                <DotsIcon className='dark:fill-dark_svg_1 fill-white' />
                             </button>
+                            {
+                                showMenu? <Menu /> : null
+                            }
                         </li>
                     </ul>
                 </div>

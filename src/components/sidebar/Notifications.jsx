@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ArrowIcon, CloseIcon, NotificationIcon } from '../../svg'
 
 export default function Notifications() {
+    const [isOpen, setIsOpen] = useState(true);
+    const handleCloseNotifications = () => {
+        setIsOpen(false);
+    }
     return (
-        <div className='h-[90px] dark:bg-dark_bg_3 bg-indigo-400 flex items-center p-[13px]'>
+        <div className='h-[90px] dark:bg-dark_bg_3 bg-blue-500 flex items-center p-[13px]' style={{display: isOpen ? 'flex' : 'none'}}>
             {/* Container */}
             <div className='w-full flex items-center justify-between'>
                 {/* Left side */}
@@ -20,7 +24,7 @@ export default function Notifications() {
                     </div>
                 </div>
                 {/* Right side */}
-                <div className='cursor-pointer'>
+                <div className='cursor-pointer' onClick={handleCloseNotifications}>
                     <CloseIcon className='dark:fill-dark_svg_2 fill-white' />
                 </div>
             </div>
