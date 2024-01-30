@@ -26,7 +26,7 @@ export default function Conversation({ convo }) {
                         {
                             convo.picture.toString().includes('Default_ProfilePicture_gjngnb') ?
                                 <Avatar name={convo.name} variant={
-                                    ["marble", "beam", "pixel", "sunset", "ring", "bauhaus"][
+                                    ["marble", "beam", "ring", "bauhaus"][
                                     Math.floor(Math.random() * 6)
                                     ]
                                 } colors={['#ff6d00', '#ff7900', '#ff8500', '#ff9e00', '#3c096c', '#7b2cbf', '#9d4edd', '#e500a4']} /> : <img src={convo.picture} alt={convo.name} className='w-full h-full object-cover' />
