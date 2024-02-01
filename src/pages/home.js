@@ -17,7 +17,7 @@ export default function Home() {
     return (
         <div className="h-screen dark:bg-dark_bg_1 flex items-center justify-center py-[2px] w-full">
             {/* Container */}
-            <div className="h-screen w-11/12 px-2 flex bg-slate-100">
+            <div className="h-screen w-11/12 flex bg-slate-100">
             <Sidebar/>
             {
                 activeConversation._id ? <ChatContainer/> : 

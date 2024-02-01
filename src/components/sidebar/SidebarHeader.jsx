@@ -40,7 +40,7 @@ export default function SidebarHeader() {
                                 <ChatIcon className='dark:fill-dark_svg_1 fill-white' />
                             </button>
                         </li>
-                        <li className='relative' onClick={() => setShowMenu((prev) => !prev)} >
+                        <li className='relative' onClick={() => setShowMenu((prev) => !prev)} onBlur={() => setShowMenu(false)}>
                             <button className={`btn-2 ${showMenu ? "bg-dark_hover_1" : ""}`}>
                                 <DotsIcon className='dark:fill-dark_svg_1 fill-white' />
                             </button>

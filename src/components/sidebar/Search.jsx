@@ -35,9 +35,10 @@ export default function Search({ searchLength, setSearchResults, searchResults }
         <div className='flex items=center gap-x-2'>
           <div className='w-full flex bg-indigo-300 rounded-lg pl-2'>
             {show || searchLength > 0 ?
-              <span className='w-8 flex items-center justify-center rotateAnimation cursor-pointer' onClick={() => {
+              <span className='w-8 flex items-center justify-center rotateAnimation cursor-pointer' onClick={ async() => {
                 setSearchResults([]);
                 setInput('');
+                await setShow(false);
               }}>
                 <ReturnIcon className='fill-white w-5' />
               </span>
