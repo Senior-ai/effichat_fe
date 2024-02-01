@@ -34,6 +34,15 @@ export const loginUser = createAsyncThunk('auth/login', async(values, {rejectWit
     }
 })
 
+export const changePass = createAsyncThunk('auth/changepass', async(values, {rejectWithValue}) => {
+    try {
+        const {data} = await axios.post(`${AUTH_ENDPOINT}/changepassword`, {...values});
+        return data;
+    } catch (error) {
+        return rejectWithValue(error.response.data.error.message);
+    }
+})
+
 export const userSlice = createSlice({
     name: "user",
     initialState,

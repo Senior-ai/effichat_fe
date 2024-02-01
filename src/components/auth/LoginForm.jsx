@@ -2,9 +2,9 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { signInSchema } from "../../utils/validation";
-import AuthInput from "./AuthInput";
-import GithubButton from './GithubButton';
-import GoogleButton from './GoogleButton';
+import AuthInput from "./common/AuthInput";
+import GithubButton from './common/GithubButton';
+import GoogleButton from './common/GoogleButton';
 import { useNavigate } from 'react-router-dom';
 import { loginUser, changeStatus } from '../../features/userSlice';
 import { PulseLoader } from 'react-spinners';
@@ -53,7 +53,7 @@ export default function LoginForm() {
                     </div>
 
                     <div className="text-sm">
-                        <a href="/" className="font-medium text-blue-600 hover:text-blue-500">
+                        <a href="/forgotPass" className="font-medium text-blue-600 hover:text-blue-500">
                             Forgot your password?
                         </a>
                     </div>

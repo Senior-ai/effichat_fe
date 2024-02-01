@@ -8,6 +8,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import Home from "./pages/home";
 import Login from "./pages/login";
 import Register from "./pages/register";
+import ForgotPass from "./pages/forgotpass";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "./features/userSlice";
 
@@ -36,6 +37,7 @@ function App() {
               path="/register"
               element={!token ? <Register /> : <Navigate to="/" />}
             />
+            <Route exact path='/forgotPass' element={<ForgotPass/>}/>
           </Routes>
         </Router>
       </div>

@@ -2,10 +2,12 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { DotsIcon, SearchLargeIcon } from '../../../svg';
 import { capitalize } from '../../../utils/string';
+import { getRelevantName, getRelevantPic } from '../../../utils/chat';
 
 export default function ChatHeader() {
     const { activeConversation } = useSelector((state) => state.chat);
-    const { name, picture } = activeConversation;
+    const {user} = useSelector((state) => state.user);
+    const { name } = activeConversation;
     return (
         <div className='h-[5%] dark:bg-dark_bg_2 bg-indigo-300 flex items-center p-2 select-none'>
             {/* Container */}
@@ -14,11 +16,11 @@ export default function ChatHeader() {
                 <div className='flex items-center gap-x-4'>
                     {/* Conversation Image */}
                     <button className='btn'>
-                        <img src={picture} alt={`${name}'s profile`} className='w-full h-full rounded-full' />
+                        <img src={getRelevantPic(activeConversation, user)} alt={`${name}'s profile`} className='w-full h-full rounded-full' />
                     </button>
                     <div className="flex flex-col">
                         <h1 className='text-white text-md font-bold'>
-                            {capitalize(name)}
+                            {capitalize(getRelevantName(activeConversation, user))}
                         </h1>
                         <span className='text-xs text-white'>Online</span>
                     </div>

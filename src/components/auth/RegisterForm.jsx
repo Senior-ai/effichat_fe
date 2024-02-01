@@ -2,12 +2,12 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { signUpSchema } from "../../utils/validation";
-import AuthInput from './AuthInput';
-import GoogleButton from './GoogleButton';
-import GithubButton from './GithubButton';
+import AuthInput from './common/AuthInput';
+import GoogleButton from './common/GoogleButton';
+import GithubButton from './common/GithubButton';
 import { useDispatch, useSelector } from 'react-redux';
-import {PulseLoader} from 'react-spinners';
-import {useNavigate} from 'react-router-dom'
+import { PulseLoader } from 'react-spinners';
+import { useNavigate } from 'react-router-dom'
 import { registerUser, changeStatus } from '../../features/userSlice';
 import axios from 'axios';
 import Picture from './Picture';
@@ -18,7 +18,7 @@ const cloudName = process.env.REACT_APP_CLOUD_NAME;
 export default function RegisterForm() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const {status, error} = useSelector((state) => state.user);
+    const { status, error } = useSelector((state) => state.user);
     const [picture, setPicture] = useState();
     const [readablePicture, setReadablePicture] = useState();
     const {
@@ -30,28 +30,31 @@ export default function RegisterForm() {
         resolver: yupResolver(signUpSchema),
     });
 
-    const onSubmit = async(data) => {
+    const onSubmit = async (data) => {
         let res;
         dispatch(changeStatus('loading'))
         if (picture) {
             //upload to cloudinary and then register user
             await uploadImage().then(async (cloudRes) => {
-                res = await dispatch(registerUser({...data, picture: cloudRes.secure_url}));
+                res = await dispatch(registerUser({ ...data, picture: cloudRes.secure_url }));
             });
         } else {
-            res = await dispatch(registerUser({...data, picture: ''}));
+            const variant = ["marble", "beam", "ring", "bauhaus"][Math.floor(Math.random() * 4)];
+            const picName = data.name.replace(/ /g, "%20");
+            const imgUrl = `https://source.boringavatars.com/${variant}/120/${picName}?colors=ff6d00,ff7900,ff8500,ff9e00,3c096c,7b2cbf,9d4edd,e500a4`
+            res = await dispatch(registerUser({ ...data, picture: imgUrl }));
         }
         console.log(res);
         if (res?.payload?.user) {
             navigate('/')
         }
     };
-    
-    const uploadImage = async() => {
+
+    const uploadImage = async () => {
         let formData = new FormData();
         formData.append('upload_preset', cloudSecret);
         formData.append('file', picture);
-        const {data} = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, formData);
+        const { data } = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, formData);
         console.log(data);
         return data;
     }
@@ -66,7 +69,7 @@ export default function RegisterForm() {
             <div className="w-full flex-1 mt-4">
                 {/* 3rd party Buttons */}
                 <div className="flex flex-col items-center justify-between space-y-3">
-                    <GoogleButton text='Sign Up with Google'/>
+                    <GoogleButton text='Sign Up with Google' />
                     <GithubButton text='Sign Up with GitHub' />
                 </div>
                 {/* Form */}
@@ -94,9 +97,9 @@ export default function RegisterForm() {
                             name="Status" type="text" placeholder="Status (Optional)"
                             register={register} error={errors?.status?.message}
                         />
-                        <Picture readablePicture={readablePicture} setReadablePicture={setReadablePicture} setPicture={setPicture}/>
+                        <Picture readablePicture={readablePicture} setReadablePicture={setReadablePicture} setPicture={setPicture} />
                         {/* If we have an error */}
-                        {error? <div>
+                        {error ? <div>
                             <p className='text-red-400'>{error}</p>
                         </div> : null}
                         <button type='submit'
@@ -108,7 +111,7 @@ export default function RegisterForm() {
                                 <path d="M20 8v6M23 11h-6" />
                             </svg>
                             <span className="ml-3">
-                                {status === 'load'? <PulseLoader color="#fff" size={12} /> : 'Sign Up'}
+                                {status === 'load' ? <PulseLoader color="#fff" size={12} /> : 'Sign Up'}
                             </span>
                         </button>
                         <p className="mt-6 text-xs text-gray-600 text-center">

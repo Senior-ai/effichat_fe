@@ -69,6 +69,29 @@ export const getConversationMessages = createAsyncThunk(
   }
 );
 
+export const sendMessage = createAsyncThunk(
+  "message/send",
+  async (values, { rejectWithValue }) => {
+    const { token, message, convoId, files } = values;
+    try {
+      const { data } = await axios.post(
+        `${MESSAGE_ENDPOINT}`,
+        {
+          message, convoId, files
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.error.message);
+    }
+  }
+);
+
 export const chatSlice = createSlice({
   name: "chat",
   initialState,
@@ -110,7 +133,22 @@ export const chatSlice = createSlice({
       .addCase(getConversationMessages.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
-      });
+      })
+      .addCase(sendMessage.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(sendMessage.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.messages = [...state.messages, action.payload];
+        let conversation = {...action.payload.conversation, latestMessage: action.payload}
+        let newConvos = [...state.conversations].filter((c) => c._id !== conversation._id)
+        newConvos.unshift(conversation); 
+        state.conversations = newConvos;
+      })
+      .addCase(sendMessage.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      });;
   },
 });
 
