@@ -1,7 +1,7 @@
 import React from 'react'
 import Contact from './Contact'
 
-export default function SearchResults({ searchResults }) {
+export default function SearchResults({ searchResults, setSearchResults }) {
     return (
         <div className='w-full convos scrollbar bg-blue-700'>
             <div>
@@ -12,7 +12,7 @@ export default function SearchResults({ searchResults }) {
                 <ul>
                     {
                         searchResults && searchResults.map((user) => 
-                            <Contact contact={user} key={user._id} />)
+                            <Contact contact={user} key={user._id} setSearchResults={setSearchResults}/>)
                     }
                 </ul>
             </div>

@@ -9,10 +9,7 @@ export default function Search({ searchLength, setSearchResults, searchResults }
   const [show, setShow] = useState(false);
   const [input, setInput] = useState('');
   const handleSearch = async (e) => {
-
-    // if (e.target.value) {
-    //     console.log(e.target.value);
-    // }
+    setInput(e.target.value);
     if (e.target.value && e.key === "Enter") {
       try {
         const { data } = await axios.get(
@@ -40,7 +37,7 @@ export default function Search({ searchLength, setSearchResults, searchResults }
           <div className='w-full flex bg-indigo-300 rounded-lg pl-2'>
             {show || searchLength > 0 ?
               <span className='w-8 flex items-center justify-center rotateAnimation cursor-pointer' onClick={() => {
-
+                setInput('');
                 setSearchResults([]);
               }}>
                 <ReturnIcon className='fill-white w-5' />
@@ -49,8 +46,8 @@ export default function Search({ searchLength, setSearchResults, searchResults }
                 <SearchIcon className='fill-white w-5' />
               </span>}
             <input type="text" placeholder='Search or start a new chat' className='input bg-indigo-300 placeholder-white'
-              onFocus={() => setShow(true)} onBlur={() => searchLength == 0 && setShow(false)}
-              onKeyDown={(e) => handleSearch(e)} />
+              onFocus={() => setShow(true)} onBlur={() => searchLength === 0 && setShow(false)}
+              onChange={(e) => handleSearch(e)} value={input}/>
           </div>
           <button className='btn-2'>
             <FilterIcon className='fill-white' />
