@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { FilterIcon, ReturnIcon, SearchIcon } from '../../svg';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
@@ -9,7 +9,6 @@ export default function Search({ searchLength, setSearchResults, searchResults }
   const [show, setShow] = useState(false);
   const [input, setInput] = useState('');
   const handleSearch = async (e) => {
-    setInput(e.target.value);
     if (e.target.value && e.key === "Enter") {
       try {
         const { data } = await axios.get(
@@ -37,8 +36,8 @@ export default function Search({ searchLength, setSearchResults, searchResults }
           <div className='w-full flex bg-indigo-300 rounded-lg pl-2'>
             {show || searchLength > 0 ?
               <span className='w-8 flex items-center justify-center rotateAnimation cursor-pointer' onClick={() => {
-                setInput('');
                 setSearchResults([]);
+                setInput('');
               }}>
                 <ReturnIcon className='fill-white w-5' />
               </span>
@@ -47,7 +46,7 @@ export default function Search({ searchLength, setSearchResults, searchResults }
               </span>}
             <input type="text" placeholder='Search or start a new chat' className='input bg-indigo-300 placeholder-white'
               onFocus={() => setShow(true)} onBlur={() => searchLength === 0 && setShow(false)}
-              onChange={(e) => handleSearch(e)} value={input}/>
+              onKeyDown={(e) => handleSearch(e)} value={input} onChange={(e) => setInput(e.target.value)}/>
           </div>
           <button className='btn-2'>
             <FilterIcon className='fill-white' />
