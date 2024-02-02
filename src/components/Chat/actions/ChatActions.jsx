@@ -11,6 +11,7 @@ export default function ChatActions() {
     const dispatch = useDispatch();
     const [showEmojis, setShowEmojis] = useState(false);
     const [showAttachments, setShowAttachments] = useState(false);
+    const [loading, setLoading] = useState(false);
     const {activeConversation, status} = useSelector((state) => state.chat);
     const {user} = useSelector((state) => state.user);
     const {token} = user
@@ -27,8 +28,10 @@ export default function ChatActions() {
         if (message === '') {
             return;
         }
+        setLoading(true);
         await dispatch(sendMessage(values));
         setMessage('');
+        setLoading(false);
     } 
     return (
         <form className='bg-indigo-300 h-[50px] w-full flex items-center absolute bottom-0 py-2 select-none' onSubmit={(e) => SendMessageHandler(e)}>
@@ -43,7 +46,7 @@ export default function ChatActions() {
                 {/* Send button */}
                 <button type="submit" className='btn-2'>
                     {
-                        status === 'loading'? <ClipLoader color="#E9EDEF"/> :
+                        status === 'loading' && loading? <ClipLoader color="#E9EDEF"/> :
                          <SendIcon className='fill-white dark:fill-dark_svg_1' onClick={()=>{}}/>
                     }
                 </button>

@@ -28,7 +28,7 @@ export default function Search({ searchLength, setSearchResults, searchResults }
     }
   };
   return (
-    <div className='h-[49px] py-1.5 bg-blue-700'>
+    <div className='h-[49px] py-1.5 bg-blue-600'>
       {/* Container */}
       <div className="px-[10px]">
         {/* Search container */}

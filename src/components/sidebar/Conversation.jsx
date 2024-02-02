@@ -8,6 +8,7 @@ import { getConversationId, getRelevantName, getRelevantPic } from '../../utils/
 export default function Conversation({ convo }) {
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.user);
+    const {activeConversation} = useSelector((state) => state.chat);
     const values = {
         receiverId: getConversationId(user, convo.users),
         token: user.token,
@@ -18,7 +19,8 @@ export default function Conversation({ convo }) {
 
     return (
         <li onClick={() => openConversation()}
-            className='list-none h-[72px] w-full p-3 hover:bg-blue-800 bg-blue-700 cursor-pointer text-white'>
+            className={`list-none h-[72px] w-full p-3 hover:bg-blue-700  cursor-pointer text-white
+            ${convo._id === activeConversation._id? 'bg-blue-800' : 'bg-blue-600' }`}>
             <div className='relative w-full flex items-center justify-between'>
                 {/* Left side */}
                 <div className="flex items-center gap-x-3">
@@ -46,7 +48,7 @@ export default function Conversation({ convo }) {
                         dateHandler(convo.latestMessage?.createdAt) : ''}</span>
                 </div>
             </div>
-            <hr className='mt-2 ml-4 w-64 border-b border-b-blue-800 border-t-blue-800' />
+            <hr className='mt-3 ml-4 w-64 border-b border-b-blue-800 border-t-blue-800' />
         </li>
     )
 }
