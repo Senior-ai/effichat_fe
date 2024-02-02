@@ -3,8 +3,9 @@ import { Sidebar } from "../components/sidebar/index.js";
 import { useDispatch, useSelector } from "react-redux";
 import { getConversations } from "../features/chatSlice.js";
 import {ChatContainer, EffichatHome} from './../components/Chat/index.js';
+import SocketContext from "../context/SocketContext.js";
 
-export default function Home() {
+function Home({socket}) {
     const dispatch = useDispatch();
     const {user} = useSelector((state) => state.user);
     const {activeConversation} = useSelector((state) => state.chat);
@@ -27,3 +28,10 @@ export default function Home() {
         </div>
     );
 }
+
+const HomeWithSocket = (props) => (
+    <SocketContext.Consumer>
+        {(socket) => <Home {...props} socket={socket} />}
+    </SocketContext.Consumer>
+)
+export default HomeWithSocket
