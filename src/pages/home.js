@@ -10,6 +10,7 @@ function Home({socket}) {
     const {user} = useSelector((state) => state.user);
     const {activeConversation} = useSelector((state) => state.chat);
     const [onlineUsers, setOnlineUsers] = useState([]);
+    const [typing, setTyping] = useState(false);
     //get conversations & join user in socket
     useEffect(() => {
         socket.emit('join', user._id);
@@ -21,19 +22,22 @@ function Home({socket}) {
        }
     }, [user]);
 
-    //listening to received messages
+    //listening to received messages & Typing
     useEffect(() => {
         socket.on('message received', message => {
                 dispatch(updateMessages(message))
         });
-    }, [socket])
+        socket.on('typing', () => setTyping(true));
+        socket.on('stop typing', () => setTyping(false));
+    }, [])
+
     return (
         <div className=" h-screen dark:bg-dark_bg_1 flex items-center justify-center py-[2px] w-full">
             {/* Container */}
             <div className="container h-screen flex bg-slate-100">
-            <Sidebar onlineUsers={onlineUsers}/>
+            <Sidebar onlineUsers={onlineUsers} typing={typing}/>
             {
-                activeConversation._id ? <ChatContainer onlineUsers={onlineUsers}/> : 
+                activeConversation._id ? <ChatContainer onlineUsers={onlineUsers} typing={typing}/> : 
                 <EffichatHome/>
             }
             </div>
