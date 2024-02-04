@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {Notifications, SidebarHeader, Search, Conversations, SearchResults} from './index.js'
 
-export default function Sidebar() {
+export default function Sidebar({onlineUsers}) {
   const [searchResults, setSearchResults] = useState([]);
   return (
     <div className='flex0030 max-w-[35%] h-full select-none bg-blue-700'>
@@ -18,7 +18,7 @@ export default function Sidebar() {
           </>
         ) : (
           <>
-            <Conversations/>
+            <Conversations onlineUsers={onlineUsers}/>
           </>
         )
       }

@@ -4,7 +4,7 @@ import { DotsIcon, SearchLargeIcon } from '../../../svg';
 import { capitalize } from '../../../utils/string';
 import { getRelevantName, getRelevantPic } from '../../../utils/chat';
 
-export default function ChatHeader() {
+export default function ChatHeader({online}) {
     const { activeConversation } = useSelector((state) => state.chat);
     const {user} = useSelector((state) => state.user);
     const { name } = activeConversation;
@@ -20,9 +20,9 @@ export default function ChatHeader() {
                     </button>
                     <div className="flex flex-col">
                         <h1 className='text-white text-md font-bold'>
-                            {capitalize(getRelevantName(activeConversation, user))}
+                            {capitalize(getRelevantName(user, activeConversation.users))}
                         </h1>
-                        <span className='text-xs text-white'>Online</span>
+                        <span className='text-xs text-white'>{online? 'Online' : ''}</span>
                     </div>
                 </div>
                 {/* Right side */}
