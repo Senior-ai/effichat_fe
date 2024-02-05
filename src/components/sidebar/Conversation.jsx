@@ -5,11 +5,11 @@ import { openCreateConversation } from '../../features/chatSlice';
 import { getConversationId, getRelevantName, getRelevantPic } from '../../utils/chat';
 import SocketContext from '../../context/SocketContext';
 
-function Conversation({ convo, socket, online }) {
-    console.log(online);
+function Conversation({ convo, socket, online, typing }) {
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.user);
     const { activeConversation } = useSelector((state) => state.chat);
+    const me = user._id === activeConversation.latestMessage?.sender._id? true : false
     const values = {
         receiverId: getConversationId(user, convo.users),
         token: user.token,
@@ -37,8 +37,13 @@ function Conversation({ convo, socket, online }) {
                             {/* Convo message */}
                             <div className="flex items-center gap-x-1 text-dark_text_1 dark:text-dark_text_2">
                                 <div className="flex-1 items-center gap-x-1 text-dark_text_1 dark:text-dark_text_2">
-                                    <p>{convo.latestMessage?.message > 15 ? `${convo.latestMessage?.message.substring(0, 15)}..` :
-                                        convo.latestMessage?.message}</p>
+                                    {
+                                        typing === convo._id? (
+                                        <p className='text-dark_text_1'>Typing...</p>) : 
+                                        (<p className={`${me? ('text-dark_text_4') : ('text-white')}`}>{convo.latestMessage?.message > 10 ? `${convo.latestMessage?.message.substring(0, 10)}..` :
+                                        convo.latestMessage?.message}</p>)
+                                    }
+                                    
                                 </div>
                             </div>
                         </div>

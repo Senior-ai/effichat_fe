@@ -22,7 +22,7 @@ export default function ChatHeader({online}) {
                         <h1 className='text-white text-md font-bold'>
                             {capitalize(getRelevantName(user, activeConversation.users))}
                         </h1>
-                        <span className='text-xs text-white'>{online? 'Online' : ''}</span>
+                        <span className='text-xs text-white'>{online === 'true'? 'Online' : ''}</span>
                     </div>
                 </div>
                 {/* Right side */}

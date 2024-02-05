@@ -27,7 +27,7 @@ function Home({socket}) {
         socket.on('message received', message => {
                 dispatch(updateMessages(message))
         });
-        socket.on('typing', () => setTyping(true));
+        socket.on('typing', (conversation) => setTyping(conversation));
         socket.on('stop typing', () => setTyping(false));
     }, [])
 

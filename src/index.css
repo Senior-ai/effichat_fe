@@ -246,3 +246,56 @@
       width: 100%;
     }
   }
+
+  .gradient:hover {
+    color: #fff;
+  background: linear-gradient(-45deg, #7690e7, #4006e0, #0f2f86, #0641e4, #254ec0,#23A6D5);
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 4s ease infinite;
+  -moz-animation: Gradient 4s ease infinite;
+  animation: Gradient 2s ease infinite;
+  }
+  @-webkit-keyframes Gradient {
+    0% {
+    background-position: 0% 50%
+    }
+    10% {
+      background-position: 0% 10%;
+      }
+  50% {
+  background-position: 100% 50%
+  }
+  100% {
+  background-position: 0% 50%
+  }
+  }
+  
+  @-moz-keyframes Gradient {
+    0% {
+    background-position: 0% 50%
+    }
+    10% {
+      background-position: 0% 10%;
+      }
+  50% {
+  background-position: 100% 50%
+  }
+  100% {
+  background-position: 0% 50%
+  }
+  }
+  
+  @keyframes Gradient {
+    0% {
+    background-position: 0% 50%
+    }
+    10% {
+    background-position: 0% 10%;
+    }
+  50% {
+  background-position: 100% 50%
+  }
+  100% {
+  background-position: 0% 50%
+  }
+  }
