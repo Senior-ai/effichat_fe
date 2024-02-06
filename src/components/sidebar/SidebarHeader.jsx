@@ -10,7 +10,7 @@ export default function SidebarHeader() {
     const { user } = useSelector((state) => state.user);
     const [showMenu, setShowMenu] = useState(false);
     const [showCreateGroup, setShowCreateGroup] = useState(false);
-    console.log(user);
+
     return (
         <>
             <div className='h-[50px] bg-indigo-300 dark:bg-dark_bg_2 flex items-center px-4'>

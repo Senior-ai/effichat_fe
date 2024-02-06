@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useSelector } from 'react-redux';
-import { TbPencilStar } from "react-icons/tb";
 import SocketContext from '../../../context/SocketContext.js';
 import { AiButton } from './AiButton.jsx';
 

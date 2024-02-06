@@ -299,3 +299,10 @@
   background-position: 0% 50%
   }
   }
+
+  .attachments-menu-item {
+    justify-content: space-between;
+  }
+  .attachments-menu-item:hover  {
+    @apply bg-indigo-300 text-white
+  }
