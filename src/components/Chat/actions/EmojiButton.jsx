@@ -28,7 +28,7 @@ export default function EmojiButton({textRef, message, setMessage, showEmojis, s
       </button>
       {
         showEmojis ? (
-          <div className='openEmojiAnimation absolute bottom-[60px] left-[-0.5px] w-full'>
+          <div className='openEmojiAnimation absolute bottom-[60px] left-2 w-full'>
             <EmojiPicker onEmojiClick={handleEmoji} />
           </div>
         ) : ''

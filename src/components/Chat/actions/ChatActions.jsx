@@ -45,7 +45,7 @@ function ChatActions({socket}) {
                     <Attachments showAttachments={showAttachments} setShowAttachments={setShowAttachments} setShowEmojis={setShowEmojis}/>
                 </ul>
                 {/* Input */}
-                <Input message={message} setMessage={setMessage} textRef={textRef}/>
+                <Input message={message} setMessage={setMessage} textRef={textRef} setShowEmojis={setShowEmojis} setShowAttachments={setShowAttachments}/>
                 {/* Send button */}
                 <button type="submit" className='btn-2'>
                     {
