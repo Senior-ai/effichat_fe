@@ -15,13 +15,14 @@ export const GifButton = ({textRef, message, setMessage, setShowEmojis, setShowA
 
   const handleGif = (gifData, e) => {
     const {gif} = gifData;
-    const ref = textRef.current;
-    ref.focus();
-    const start = message.substring(0, ref.selectionStart);
-    const end = message.substring(ref.selectionStart, ref.selectionEnd);
-    const newText = start + gif + end;
-    setMessage(newText);
-    setCursorPosition(start.length+gif.length);
+    console.log('Gif Picker not working yet!')
+    // const ref = textRef.current;
+    // ref.focus();
+    // const start = message.substring(0, ref.selectionStart);
+    // const end = message.substring(ref.selectionStart, ref.selectionEnd);
+    // const newText = start + gif + end;
+    // setMessage(newText);
+    // setCursorPosition(start.length+gif.length);
   }
 
   return (
