@@ -21,9 +21,6 @@ export default function LoginForm() {
         resolver: yupResolver(signInSchema),
     });
     const onSubmit = async (data) => {
-        if (error) {
-            error = ''
-        }
         dispatch(changeStatus("loading"));
         let res = await dispatch(loginUser({ ...data }))
         if (res?.payload?.user) {

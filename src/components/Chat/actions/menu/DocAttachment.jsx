@@ -9,12 +9,12 @@ import { getFileType } from '../../../../utils/file';
 export const DocAttachment = () => {
     const dispatch = useDispatch();
     const inputRef = useRef(null);
-    const reader= new FileReader();
+
 
     const fileHandler = (e) => {
         let files = Array.from(e.target.files);
         files.forEach((file) => {
-            if (file.size > 1024 * 1024 * 5) {
+            if (file.size > 1024 * 1024 * 10) {
                 files = files.filter((item) => item.name !== file.name);
                 return;
             }
@@ -30,6 +30,7 @@ export const DocAttachment = () => {
                      }
             } else {
                 //image handle
+                const reader = new FileReader();
                 reader.readAsDataURL(file);
                 reader.onload=(e) => {
                     dispatch(updateFiles({file: file, fileData: e.target.result, type: getFileType(file.type)}));
@@ -46,6 +47,7 @@ export const DocAttachment = () => {
         && file.type !== 'application/vnd.rar' && file.type !== 'application/zip' && file.type !== 'audio/wav' && file.type !== 'audio/mpeg') {
             return file;
         } else {
+            const reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload=(e) => {
                 dispatch(updateFiles({file: file, fileData: e.target.result, type: getFileType(file.type)}));
