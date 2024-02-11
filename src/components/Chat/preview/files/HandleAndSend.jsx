@@ -4,9 +4,11 @@ import { AiOutlineClose } from "react-icons/ai";
 import { AddFile } from './AddFile';
 import { IoSendSharp } from "react-icons/io5";
 import { uploadFiles } from '../../../../utils/file';
-import { removeFile, sendMessage } from '../../../../features/chatSlice';
+import { clearFiles, removeFile, sendMessage } from '../../../../features/chatSlice';
 import SocketContext from '../../../../context/SocketContext';
 import { ClipLoader } from 'react-spinners';
+import VideoThumbnail from 'react-video-thumbnail';
+
 
 const HandleAndSend = ({activeIndex, setActiveIndex, message, socket}) => {
     const dispatch = useDispatch();
@@ -28,6 +30,7 @@ const HandleAndSend = ({activeIndex, setActiveIndex, message, socket}) => {
         let newMsg = await dispatch(sendMessage(values));
         socket.emit('send message', newMsg.payload);
         setLoading(false);
+        await dispatch(clearFiles());
     }
 
     const handleRemoveFile = (index) => {
@@ -43,7 +46,9 @@ const HandleAndSend = ({activeIndex, setActiveIndex, message, socket}) => {
                     <div key={i} className={`fileThumbnail relative w-14 h-14 border border-indigo-400  mt-2 rounded-md overflow-hidden cursor-pointer ${activeIndex === i? 'border-[3px] border-indigo-600 ' : ''}`} onClick={() => setActiveIndex(i)}>
                         {
                             file.type === 'IMAGE'  ? <img src={file.fileData} alt="File preview" className='w-full h-full object-contain'/> 
-                            : <img src={`../../../../images/file/${file.type}.png`} alt="File preview" className='w-8 h-10 mt-1.5 ml-2.5' />
+                            : file.type === 'VIDEO' ? <VideoThumbnail videoUrl={file.fileData}></VideoThumbnail> : 
+                            <img src={`../../../../images/file/${file.type}.png`} alt="File preview" className='w-8 h-10 mt-1.5 ml-2.5' />
+                            
                         }
                         <div className='removeFileIcon hidden' onClick={() => handleRemoveFile(i)}>
                             <AiOutlineClose size={14} className='absolute right-0 top-0'/>

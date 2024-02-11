@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 
-export const FileViewer = ({activeIndex}) => {
+export const FileViewer = ({ activeIndex }) => {
     const { files } = useSelector((state) => state.chat);
     console.log(files)
     console.log('FileViewer-', activeIndex)
@@ -16,18 +16,22 @@ export const FileViewer = ({activeIndex}) => {
                                 {files[activeIndex]?.file?.size} kB - {files[activeIndex]?.type}
                             </span>
                         </div>
-                    ) : (
-                        <div className="min-w-full min-h-full hview flex flex-col items-center justify-center mt-2">
-                            <img src={`../../../../images/file/${files[activeIndex]?.type}.png`} alt={files[activeIndex]?.type} className='h-[100px] w-[100px] object-contain' />
-                            <h2 className='text-2xl text-gray-700'>
-                                No preview available
-                            </h2>
-                            <span className='text-gray-600 '>
-                                {files[activeIndex]?.file?.size} kB - {files[activeIndex]?.type}
-                            </span>
-                        </div>
-                    )
-
+                    ) :
+                        files[activeIndex]?.type === 'VIDEO' ? (
+                            <video src={files[activeIndex].fileData} controls className='max-w-[80%] object-contain hview'></video>) :
+                            (
+                                (
+                                    <div className="min-w-full min-h-full hview flex flex-col items-center justify-center mt-2">
+                                        <img src={`../../../../images/file/${files[activeIndex]?.type}.png`} alt={files[activeIndex]?.type} className='h-[100px] w-[100px] object-contain' />
+                                        <h2 className='text-2xl text-gray-700'>
+                                            No preview available
+                                        </h2>
+                                        <span className='text-gray-600 '>
+                                            {files[activeIndex]?.file?.size} kB - {files[activeIndex]?.type}
+                                        </span>
+                                    </div>
+                                )
+                            )
                 }
 
             </div>
