@@ -1,6 +1,6 @@
 import React from "react";
 import RegisterForm from "../components/auth/RegisterForm";
-import Logo from "../svg/logo512.png";
+import Logo from "../logo/logo512.png";
 export default function Register() {
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center overflow-hidden">

@@ -13,7 +13,7 @@ export default function Notifications() {
                 {/* Left side */}
                 <div className='flex items-center gap-x-4'>
                     <div className='cursor-pointer'>
-                        <IoMdNotificationsOff className='dark:fill-blue_1 fill-white' />
+                        <IoMdNotificationsOff size={36} className='dark:fill-blue_1 fill-white' />
                     </div>
                     <div className='flex flex-col'>
                         <span className='textPrimary'>Get notified of new messages</span>
@@ -25,7 +25,7 @@ export default function Notifications() {
                 </div>
                 {/* Right side */}
                 <div className='cursor-pointer' onClick={handleCloseNotifications}>
-                    <IoMdClose className='dark:fill-dark_svg_2 fill-white' />
+                    <IoMdClose size={24} className='dark:fill-dark_svg_2 fill-white' />
                 </div>
             </div>
 

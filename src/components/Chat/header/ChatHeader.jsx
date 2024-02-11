@@ -30,12 +30,12 @@ export default function ChatHeader({online}) {
                 <ul className="flex items-center gap-x-2.5">
                     <li>
                         <button className='inline-flex items-center justify-center rounded-lg border h-10 w-10 transition duration-500 ease-in-out hover:bg-indigo-500 focus:outline-none'>
-                            <IoIosSearch className='fill-white dark:fill-dark_svg_1'/>
+                            <IoIosSearch size={24} className='fill-white dark:fill-dark_svg_1'/>
                         </button>
                     </li>
                     <li>
                         <button className='inline-flex items-center justify-center rounded-lg border h-10 w-10 transition duration-500 ease-in-out hover:bg-indigo-500 focus:outline-none'>
-                            <BsThreeDotsVertical className='fill-white dark:fill-dark_svg_1'/>
+                            <BsThreeDotsVertical size={22} className='fill-white dark:fill-dark_svg_1'/>
                         </button>
                     </li>
                 </ul>

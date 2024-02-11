@@ -42,17 +42,17 @@ export default function Search({ searchLength, setSearchResults, searchResults }
                 setInput('');
                 await setShow(false);
               }}>
-                <IoIosReturnLeft className='fill-white w-5' />
+                <IoIosReturnLeft size={28} className='fill-white' />
               </span>
               : <span className='w-8 flex items-center justify-center'>
-                <IoMdSearch  className='fill-white w-5' />
+                <IoMdSearch size={26} className='fill-white' />
               </span>}
             <input type="text" placeholder='Search or start a new chat' className='input bg-indigo-300 placeholder-white'
               onFocus={() => setShow(true)} onBlur={() => searchLength === 0 && setShow(false)}
               onKeyDown={(e) => handleSearch(e)} value={input} onChange={(e) => setInput(e.target.value)}/>
           </div>
           <button className='btn-2'>
-            <IoFilterOutline className='fill-white' />
+            <IoFilterOutline size={24} color='white'/>
           </button>
         </div>
       </div>

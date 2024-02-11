@@ -39,9 +39,15 @@ export default function EmojiButton({textRef, message, setMessage, showEmojis, s
 
   const handleHover = () => {
     // Selecting a random emoji from the array
-    let randomIndex = Math.floor(Math.random() * emojis.length);
-    if (randomEmojiIndex === randomIndex) 
-      randomIndex++ > emojis.length? randomIndex-- : randomIndex++;
+    let randomIndex = Math.floor(Math.random() * (emojis.length - 1));
+    if (randomIndex === randomEmojiIndex && randomIndex === 0) {
+      randomIndex = Math.floor(Math.random() * (emojis.length - 1));
+    } else if (randomIndex === randomEmojiIndex) {
+      if (randomIndex === emojis.length)
+        randomIndex--;
+      else
+        randomIndex++;
+    }
     if (!showEmojis) { 
       setRandomEmojiIndex(randomIndex);
     }
@@ -59,7 +65,7 @@ export default function EmojiButton({textRef, message, setMessage, showEmojis, s
       {
         showEmojis ? (
           <div className='openEmojiAnimation absolute bottom-[60px] left-2 w-full'>
-            <EmojiPicker onEmojiClick={handleEmoji} />
+            <EmojiPicker onEmojiClick={handleEmoji} emojiStyle='native' />
           </div>
         ) : ''
       }

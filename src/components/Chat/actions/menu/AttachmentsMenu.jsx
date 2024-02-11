@@ -15,7 +15,7 @@ export const AttachmentsMenu = ( {setShowAttachments, setShowEmojis}) => {
         </button>} transition>
         <DocAttachment/>
         <MenuItem className='attachments-menu-item'><FaPoll /> Send a poll</MenuItem>
-        <MenuItem className='attachments-menu-item'><MdContactPage/> Send a contact</MenuItem>
+        <MenuItem disabled className='attachments-menu-item'><MdContactPage/> Send a contact</MenuItem>
         <MenuItem className='attachments-menu-item'><FaCamera/> Take a photo</MenuItem>  
         </Menu>
         )
