@@ -1,5 +1,4 @@
 import React from 'react'
-import { Logo } from '../../../svg'
 
 export default function EffichatHome() {
   return (

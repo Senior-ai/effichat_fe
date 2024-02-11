@@ -1,7 +1,9 @@
 import { useState } from 'react'
-import { FilterIcon, ReturnIcon, SearchIcon } from '../../svg';
+import { IoFilterOutline } from "react-icons/io5";
+import { IoIosReturnLeft, IoMdSearch  } from "react-icons/io";
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+
 export default function Search({ searchLength, setSearchResults, searchResults }) {
   console.log(searchResults);
   const { user } = useSelector((state) => state.user);
@@ -40,17 +42,17 @@ export default function Search({ searchLength, setSearchResults, searchResults }
                 setInput('');
                 await setShow(false);
               }}>
-                <ReturnIcon className='fill-white w-5' />
+                <IoIosReturnLeft className='fill-white w-5' />
               </span>
               : <span className='w-8 flex items-center justify-center'>
-                <SearchIcon className='fill-white w-5' />
+                <IoMdSearch  className='fill-white w-5' />
               </span>}
             <input type="text" placeholder='Search or start a new chat' className='input bg-indigo-300 placeholder-white'
               onFocus={() => setShow(true)} onBlur={() => searchLength === 0 && setShow(false)}
               onKeyDown={(e) => handleSearch(e)} value={input} onChange={(e) => setInput(e.target.value)}/>
           </div>
           <button className='btn-2'>
-            <FilterIcon className='fill-white' />
+            <IoFilterOutline className='fill-white' />
           </button>
         </div>
       </div>

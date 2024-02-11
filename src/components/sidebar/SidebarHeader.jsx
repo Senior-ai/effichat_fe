@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { ChatIcon, DotsIcon, StoryIcon } from '../../svg';
+import { AiOutlineHistory } from "react-icons/ai";
+import { IoIosChatbubbles } from "react-icons/io";
+import { HiOutlineDotsVertical } from "react-icons/hi";
 import { BsDot } from 'react-icons/bs';
 import {GrGroup} from 'react-icons/gr';
 
@@ -32,17 +34,17 @@ export default function SidebarHeader() {
                         </li>
                         <li>
                             <button className="btn-2">
-                                <StoryIcon className='dark:fill-dark_svg_1 fill-white' />
+                                <AiOutlineHistory className='dark:fill-dark_svg_1 fill-white' />
                             </button>
                         </li>
                         <li>
                             <button className="btn-2">
-                                <ChatIcon className='dark:fill-dark_svg_1 fill-white' />
+                                <IoIosChatbubbles className='dark:fill-dark_svg_1 fill-white' />
                             </button>
                         </li>
                         <li className='relative' onClick={() => setShowMenu((prev) => !prev)} >
                             <button className={`btn-2 ${showMenu ? "bg-dark_hover_1" : ""}`}>
-                                <DotsIcon className='dark:fill-dark_svg_1 fill-white' />
+                                <HiOutlineDotsVertical className='dark:fill-dark_svg_1 fill-white' />
                             </button>
                             {
                                 showMenu? <Menu onBlur={() => setShowMenu(false)}/> : null

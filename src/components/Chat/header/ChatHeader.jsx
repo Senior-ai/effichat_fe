@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { DotsIcon, SearchLargeIcon } from '../../../svg';
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { IoIosSearch } from "react-icons/io";
 import { capitalize } from '../../../utils/string';
 import { getRelevantName, getRelevantPic } from '../../../utils/chat';
 
@@ -29,12 +30,12 @@ export default function ChatHeader({online}) {
                 <ul className="flex items-center gap-x-2.5">
                     <li>
                         <button className='inline-flex items-center justify-center rounded-lg border h-10 w-10 transition duration-500 ease-in-out hover:bg-indigo-500 focus:outline-none'>
-                            <SearchLargeIcon className='fill-white dark:fill-dark_svg_1'/>
+                            <IoIosSearch className='fill-white dark:fill-dark_svg_1'/>
                         </button>
                     </li>
                     <li>
                         <button className='inline-flex items-center justify-center rounded-lg border h-10 w-10 transition duration-500 ease-in-out hover:bg-indigo-500 focus:outline-none'>
-                            <DotsIcon className='fill-white dark:fill-dark_svg_1'/>
+                            <BsThreeDotsVertical className='fill-white dark:fill-dark_svg_1'/>
                         </button>
                     </li>
                 </ul>

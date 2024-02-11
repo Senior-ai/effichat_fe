@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ArrowIcon, CloseIcon, NotificationIcon } from '../../svg'
+import { IoMdNotificationsOff, IoMdClose, IoIosArrowForward   } from "react-icons/io";
 
 export default function Notifications() {
     const [isOpen, setIsOpen] = useState(true);
@@ -13,19 +13,19 @@ export default function Notifications() {
                 {/* Left side */}
                 <div className='flex items-center gap-x-4'>
                     <div className='cursor-pointer'>
-                        <NotificationIcon className='dark:fill-blue_1 fill-white' />
+                        <IoMdNotificationsOff className='dark:fill-blue_1 fill-white' />
                     </div>
                     <div className='flex flex-col'>
                         <span className='textPrimary'>Get notified of new messages</span>
                         <span className='textSecondary mt-0.5 flex items-center gap-0.5'>
                             Turn on desktop notifications
-                            <ArrowIcon className='dark:fill-dark_svg_2 mt-1 fill-white' />
+                            <IoIosArrowForward className='dark:fill-dark_svg_2 mt-1 fill-white' />
                         </span>
                     </div>
                 </div>
                 {/* Right side */}
                 <div className='cursor-pointer' onClick={handleCloseNotifications}>
-                    <CloseIcon className='dark:fill-dark_svg_2 fill-white' />
+                    <IoMdClose className='dark:fill-dark_svg_2 fill-white' />
                 </div>
             </div>
 

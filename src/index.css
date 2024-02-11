@@ -306,3 +306,10 @@
   .attachments-menu-item:hover  {
     @apply bg-indigo-300 text-white
   }
+
+  .emoji {
+    color: white;
+  }
+  .emoji:hover {
+    color: yellow;
+  }

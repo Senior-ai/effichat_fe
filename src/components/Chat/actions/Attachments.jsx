@@ -1,4 +1,3 @@
-import { AttachmentIcon } from '../../../svg'
 import { AttachmentsMenu } from './menu/AttachmentsMenu'
 import { useState } from 'react';
 

@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import EmojiButton from './EmojiButton'
 import Attachments from './Attachments'
 import Input from './Input'
-import { SendIcon } from '../../../svg'
+import { IoSendSharp } from "react-icons/io5";
 import { useDispatch, useSelector } from 'react-redux'
 import {ClipLoader} from 'react-spinners'
 import { sendMessage } from '../../../features/chatSlice'
@@ -39,7 +39,7 @@ function ChatActions({socket}) {
     return (
         <form className='bg-indigo-300 h-[50px] w-full flex items-center absolute bottom-0 py-2 select-none' onSubmit={(e) => SendMessageHandler(e)}>
             <div className="w-full flex items-center gap-x-2">
-                <ul className='flex gap-x-2'>
+                <ul className='flex gap-x-1'>
                     <EmojiButton textRef={textRef} message={message} setMessage={setMessage} showEmojis={showEmojis} 
                     setShowEmojis={setShowEmojis} setShowAttachments={setShowAttachments}/>
                     <Attachments showAttachments={showAttachments} setShowAttachments={setShowAttachments} setShowEmojis={setShowEmojis}/>
@@ -50,7 +50,7 @@ function ChatActions({socket}) {
                 <button type="submit" className='btn-2'>
                     {
                         status === 'loading' && loading? <ClipLoader color="#E9EDEF"/> :
-                         <SendIcon className='fill-white dark:fill-dark_svg_1' onClick={()=>{}}/>
+                        <IoSendSharp className='fill-white dark:fill-dark_svg_1' onClick={()=>{}} size={24} />
                     }
                 </button>
             </div>

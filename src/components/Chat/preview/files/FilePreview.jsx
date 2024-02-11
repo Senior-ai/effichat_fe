@@ -3,7 +3,7 @@ import { Header } from './Header'
 import { FileViewer } from './FileViewer'
 import {Input} from './Input'
 import { HandleAndSend } from './HandleAndSend'
-
+import ChatActions from '../../actions/ChatActions';
 export const FilePreview = () => {
     const [message, setMessage] = useState('');
     const [activeIndex, setActiveIndex] = useState(0);
@@ -13,6 +13,7 @@ export const FilePreview = () => {
             <Header activeIndex={activeIndex}/>
             <FileViewer activeIndex={activeIndex} setActiveIndex={setActiveIndex} />
             <div className="w-full flex flex-col items-center">
+                {/* <ChatActions/> */}
                 <Input message={message} setMessage={setMessage} />
                 <HandleAndSend activeIndex={activeIndex} setActiveIndex={setActiveIndex}/>
             </div>

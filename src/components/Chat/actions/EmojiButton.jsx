@@ -1,12 +1,31 @@
 import React, { useEffect, useState } from 'react'
-import { CloseIcon, EmojiIcon } from '../../../svg'
+import { BsEmojiDizzyFill, BsEmojiAngryFill, BsEmojiAstonishedFill, BsEmojiExpressionlessFill,
+  BsEmojiGrinFill, BsEmojiHeartEyesFill, BsEmojiTearFill, BsEmojiWinkFill, BsEmojiSmileUpsideDownFill, BsEmojiSunglassesFill, BsEmojiSmileFill } from "react-icons/bs";
 import EmojiPicker from 'emoji-picker-react';
+import { IoClose } from "react-icons/io5";
+
+const emojis = [
+  BsEmojiSmileFill,
+  BsEmojiDizzyFill,
+  BsEmojiAngryFill,
+  BsEmojiAstonishedFill,
+  BsEmojiExpressionlessFill,
+  BsEmojiGrinFill,
+  BsEmojiHeartEyesFill,
+  BsEmojiTearFill,
+  BsEmojiWinkFill,
+  BsEmojiSmileUpsideDownFill,
+  BsEmojiSunglassesFill,
+];
 
 export default function EmojiButton({textRef, message, setMessage, showEmojis, setShowEmojis, setShowAttachments}) {
   const [cursorPosition, setCursorPosition] = useState();
+  const [randomEmojiIndex, setRandomEmojiIndex] = useState(0);
+
   useEffect(() => {
     textRef.current.selectionEnd = cursorPosition;
   }, [cursorPosition])
+
   const handleEmoji = (emojiData, e) => {
       const {emoji} = emojiData;
       const ref = textRef.current;
@@ -17,14 +36,25 @@ export default function EmojiButton({textRef, message, setMessage, showEmojis, s
       setMessage(newText);
       setCursorPosition(start.length+emoji.length);
   }
+
+  const handleHover = () => {
+    // Selecting a random emoji from the array
+    let randomIndex = Math.floor(Math.random() * emojis.length);
+    if (randomEmojiIndex === randomIndex) 
+      randomIndex++ > emojis.length? randomIndex-- : randomIndex++;
+    if (!showEmojis) { 
+      setRandomEmojiIndex(randomIndex);
+    }
+  };
+
   return (
     <li>
       <button className='icon-button' type='button' onClick={() => {
         setShowAttachments(false);
-        setShowEmojis((prev) => !prev)}}>
+        setShowEmojis((prev) => !prev)}} onMouseEnter={handleHover} >
         {showEmojis? (
-          <CloseIcon className='fill-white dark:fill-dark_svg_1'/>
-        ) : (<EmojiIcon className='fill-white dark:fill-dark_svg_1' />)}
+          <IoClose size={24} className='fill-white dark:fill-dark_svg_1'/>
+        ) : ( randomEmojiIndex !== null && React.createElement(emojis[randomEmojiIndex], { className: 'emoji dark:fill-dark_svg_1 ', size: 24}))}
       </button>
       {
         showEmojis ? (

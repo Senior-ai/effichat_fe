@@ -1,10 +1,11 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-
+import { AddFile } from './AddFile';
+import { IoSendSharp } from "react-icons/io5";
 export const HandleAndSend = ({activeIndex, setActiveIndex}) => {
     const {files} = useSelector((state) => state.chat);
   return (
-    <div className='w-[97%] items-center justify-between mt-2 broder-t dark:border-dark_border_2 border-indigo-600' >
+    <div className='w-[97%] flex items-center justify-between mt-2 broder-t dark:border-dark_border_2 border-indigo-600' >
         <span></span>
         <div className="flex gap-x-2">
             {
@@ -17,6 +18,11 @@ export const HandleAndSend = ({activeIndex, setActiveIndex}) => {
                     </div>
                 ))
             }
+            <AddFile setActiveIndex={setActiveIndex} />
+        </div>
+        {/* Send button */}
+        <div className='bg-indigo-600 hover:bg-indigo-700 w-12 h-12 mt-2 rounded-full flex items-center justify-center cursor-pointer'> 
+            <IoSendSharp color='white' size={24} className='ml-1' />
         </div>
     </div>
   )
