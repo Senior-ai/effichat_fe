@@ -18,7 +18,7 @@ function Conversation({ convo, socket, online, typing }) {
         let newConvo = await dispatch(openCreateConversation(values));
         socket.emit('join conversation', newConvo.payload._id);
     }
-
+    console.log(convo.latestMessage.message)
     return (
         <li onClick={() => openConversation()}
             className={`list-none h-[72px] w-full p-3 hover:bg-blue-700  cursor-pointer text-white
@@ -40,6 +40,8 @@ function Conversation({ convo, socket, online, typing }) {
                                     {
                                         typing === convo._id? (
                                         <p className='text-dark_text_1'>Typing...</p>) : 
+                                        convo.latestMessage.files.length > 0? (<p className='text-dark_text_1'>{convo.latestMessage.files[0].type}</p>) :
+                                        convo.latestMessage.message.includes('https://tenor.com/') ? ('GIF') :
                                         (<p className={`${me? ('text-dark_text_4') : ('text-white')}`}>{convo.latestMessage?.message > 10 ? `${convo.latestMessage?.message.substring(0, 10)}..` :
                                         convo.latestMessage?.message}</p>)
                                     }

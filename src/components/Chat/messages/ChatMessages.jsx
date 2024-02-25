@@ -4,6 +4,7 @@ import Message from './Message';
 import { BeatLoader } from 'react-spinners';
 import { Typing } from './Typing';
 import { FileMessage } from './files/FileMessage';
+import { GifMessage } from './GifMessage';
 export default function ChatMessages({ typing }) {
   const { messages, activeConversation } = useSelector((state) => state.chat);
   const { user } = useSelector((state) => state.user);
@@ -24,8 +25,12 @@ export default function ChatMessages({ typing }) {
                 <FileMessage FileMessage={file} message={message} key={message._id} me={user._id === message.sender._id}/>) : null
               }
               {
-                message.message.length > 0 ? <Message message={message} key={message._id} me={user._id === message.sender._id} />
-                  : null
+                message.message.length > 0 ? 
+                (message.message.includes('https://tenor.com/') ? (
+                  <GifMessage message={message} me={user._id === message.sender._id} />
+                ) :
+                (<Message message={message} key={message._id} me={user._id === message.sender._id} />))
+                  : (null)
               }
             </>
           ))}

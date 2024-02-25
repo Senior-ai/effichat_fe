@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import SocketContext from '../../../context/SocketContext.js';
 import { AiButton } from './AiButton.jsx';
@@ -8,6 +8,7 @@ import { GifButton } from './GifButton.jsx';
 function Input({ message, setMessage, textRef, socket, setShowEmojis, setShowAttachments }) {
   const [typing, setTyping] = useState(false);
   const { activeConversation } = useSelector((state) => state.chat);
+
   const onChangeHandler = (e) => {
     setMessage(e.target.value)
     if (!typing && e.target.value !== '') {

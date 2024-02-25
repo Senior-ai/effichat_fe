@@ -8,22 +8,18 @@ const GIF_API_KEY = process.env.TENOR_API_KEY;
 export const GifButton = ({textRef, message, setMessage, setShowEmojis, setShowAttachments}) => {
     
     const [cursorPosition, setCursorPosition] = useState();
+    const [selectedGif, setSelectedGif] = useState(null);
     const [showGifs, setShowGifs] = useState(false);
   useEffect(() => {
     textRef.current.selectionEnd = cursorPosition;
   }, [cursorPosition])
 
-  const handleGif = (gifData, e) => {
-    const {gif} = gifData;
-    console.log('Gif Picker not working yet!')
-    // const ref = textRef.current;
-    // ref.focus();
-    // const start = message.substring(0, ref.selectionStart);
-    // const end = message.substring(ref.selectionStart, ref.selectionEnd);
-    // const newText = start + gif + end;
-    // setMessage(newText);
-    // setCursorPosition(start.length+gif.length);
-  }
+  useEffect(() => {
+    if (selectedGif) {
+      setShowGifs(false);
+      setMessage(`${selectedGif.shortTenorUrl} , ${selectedGif.url}`)
+    }
+  }, [selectedGif])
 
   return (
     <div className='cursor-pointer rounded-full justify-center items-center'>
@@ -38,7 +34,7 @@ export const GifButton = ({textRef, message, setMessage, setShowEmojis, setShowA
       {
         showGifs ? (
           <div className='openEmojiAnimation absolute bottom-[60px] right-2 w-full'>
-            <GifPicker tenorApiKey={'AIzaSyDOAxoDjYTogyvmB7-cYIyWfqVXIDr6T60'} onGifClick={handleGif} />
+            <GifPicker tenorApiKey={'AIzaSyDOAxoDjYTogyvmB7-cYIyWfqVXIDr6T60'} onGifClick={setSelectedGif} />
           </div>
         ) : ''
       }

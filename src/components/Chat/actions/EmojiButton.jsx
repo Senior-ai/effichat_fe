@@ -18,7 +18,7 @@ const emojis = [
   BsEmojiSunglassesFill,
 ];
 
-export default function EmojiButton({textRef, message, setMessage, showEmojis, setShowEmojis, setShowAttachments}) {
+export default function EmojiButton({textRef, message, setMessage, showEmojis, setShowEmojis, setShowAttachments, setSelectedGif}) {
   const [cursorPosition, setCursorPosition] = useState();
   const [randomEmojiIndex, setRandomEmojiIndex] = useState(0);
 

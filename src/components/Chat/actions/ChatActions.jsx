@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import EmojiButton from './EmojiButton'
 import Attachments from './Attachments'
 import Input from './Input'
@@ -12,6 +12,7 @@ function ChatActions({socket}) {
     const dispatch = useDispatch();
     const [showEmojis, setShowEmojis] = useState(false);
     const [showAttachments, setShowAttachments] = useState(false);
+   
     const [loading, setLoading] = useState(false);
     const {activeConversation, status} = useSelector((state) => state.chat);
     const {user} = useSelector((state) => state.user);
@@ -29,19 +30,29 @@ function ChatActions({socket}) {
         if (message === '') {
             return;
         }
-
+        MessageSender()
+    }
+    const MessageSender = async () => {
         setLoading(true);
         let newMsg = await dispatch(sendMessage(values));
         socket.emit('send message', newMsg.payload);
         setMessage('');
         setLoading(false);
-    } 
+    }
+
+    useEffect(() => {
+        if (message.includes('https://tenor.com/')) {
+            console.log(message)
+            MessageSender();    
+        }
+    }, [message])
+     
     return (
         <form className='bg-indigo-300 h-[50px] w-full flex items-center absolute bottom-0 py-2 select-none' onSubmit={(e) => SendMessageHandler(e)}>
             <div className="w-full flex items-center gap-x-2">
                 <ul className='flex gap-x-1'>
                     <EmojiButton textRef={textRef} message={message} setMessage={setMessage} showEmojis={showEmojis} 
-                    setShowEmojis={setShowEmojis} setShowAttachments={setShowAttachments}/>
+                    setShowEmojis={setShowEmojis} setShowAttachments={setShowAttachments} />
                     <Attachments showAttachments={showAttachments} setShowAttachments={setShowAttachments} setShowEmojis={setShowEmojis}/>
                 </ul>
                 {/* Input */}
