@@ -18,7 +18,7 @@ function Conversation({ convo, socket, online, typing }) {
         let newConvo = await dispatch(openCreateConversation(values));
         socket.emit('join conversation', newConvo.payload._id);
     }
-    console.log(convo.latestMessage.message)
+
     return (
         <li onClick={() => openConversation()}
             className={`list-none h-[72px] w-full p-3 hover:bg-blue-700  cursor-pointer text-white

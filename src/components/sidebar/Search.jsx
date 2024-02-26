@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 
 export default function Search({ searchLength, setSearchResults, searchResults }) {
-  console.log(searchResults);
   const { user } = useSelector((state) => state.user);
   const { token } = user;
   const [show, setShow] = useState(false);
