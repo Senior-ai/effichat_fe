@@ -4,6 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { getConversations, updateMessages } from "../features/chatSlice.js";
 import {ChatContainer, EffichatHome} from './../components/Chat/index.js';
 import SocketContext from "../context/SocketContext.js";
+import { Call } from "../components/Chat/call/Call.jsx";
+
+const callData = {
+    receivingCall: true,
+    callEnded: false,
+
+ };
 
 function Home({socket}) {
     const dispatch = useDispatch();
@@ -11,6 +18,10 @@ function Home({socket}) {
     const {activeConversation} = useSelector((state) => state.chat);
     const [onlineUsers, setOnlineUsers] = useState([]);
     const [typing, setTyping] = useState(false);
+    //call
+    const [call,setCall] = useState(callData);
+    const {receivingCall, callEnded} = call;
+    const [callAccepted, setCallAccepted] = useState(false);
     //get conversations & join user in socket
     useEffect(() => {
         socket.emit('join', user._id);
@@ -41,6 +52,7 @@ function Home({socket}) {
                 <EffichatHome/>
             }
             </div>
+            <Call call={call} setCall={setCall} callAccepted={callAccepted}/>
         </div>
     );
 }

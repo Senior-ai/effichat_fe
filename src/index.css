@@ -59,7 +59,7 @@
       display: block;
     }
     .callbg {
-      background-image: linear-gradient(black, black),
+      background-image: linear-gradient(black, rgb(21, 104, 228)),
         url(https://res.cloudinary.com/dmhcnhtng/image/upload/v1677358270/Untitled-1_copy_rpx8yb.jpg);
       background-size: cover;
       background-blend-mode: saturation;
