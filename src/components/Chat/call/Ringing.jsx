@@ -25,10 +25,10 @@ export const Ringing = ({call, setCall}) => {
       <div className="p-4 flex items-center justify-between gap-x-8">
         {/* Call infos */}
         <div className="flex items-center gap-x-2">
-            <img src="https://imgv3.fotor.com/images/blog-richtext-image/10-profile-picture-ideas-to-make-you-stand-out.jpg" alt={`caller profile picture`} className='w-28 h-28 rounded-full' />
+            <img src={call.picture} alt={`caller profile picture`} className='w-28 h-28 rounded-full' />
             <div>
               <h1 className='text-white'>
-                <b>Name</b>
+                <b>{call.name}</b>
               </h1>
               <span className='text-gray-300'>Video call...</span>
             </div>

@@ -2,10 +2,10 @@ import React from 'react'
 import { IoMdDownload } from "react-icons/io";
 import {FileIcon, defaultStyles} from 'react-file-icon'
 
-export const FileOthers = ({file, type}) => {
+export const FileOthers = ({file, type, me}) => {
     let icontype = type.trim().toLowerCase();
   return (
-    <div className='bg-indigo-300 p-2'>
+    <div className={`${me? 'bg-indigo-300' : 'bg-gray-200'} p-2 rounded-md`}>
         <div className="flex justify-between gap-2">
             {/* {Download} */}
             <div className='flex items-center gap-x-8 px-2'>

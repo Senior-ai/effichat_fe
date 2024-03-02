@@ -32,6 +32,7 @@ function Home({ socket }) {
   const [stream, setStream] = useState();
   const { receivingCall, callEnded, socketId } = call;
   const [callAccepted, setCallAccepted] = useState(false);
+  const [totalSecInCall, setTotalSecInCall] = useState(0);
   const myVideo = useRef();
   const userVideo = useRef();
   //get conversations & join user in socket
@@ -118,6 +119,7 @@ function Home({ socket }) {
           <EffichatHome />
         )}
       </div>
+      <div className={(call.signal) && !call.callEnded ? "" : "hidden"}>
       <Call
         call={call}
         setCall={setCall}
@@ -126,6 +128,7 @@ function Home({ socket }) {
         myVideo={myVideo}
         stream={stream}
       />
+      </div>
     </div>
   );
 }

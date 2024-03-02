@@ -13,7 +13,7 @@ export const FileMessage = ({ FileMessage, message, me }) => {
         <div className={`relative h-full rounded-lg bg-white text-slate-600 ${me ? 'border-[3px] border-indigo-300' : 'bg-white'}`}>
             {type === 'IMAGE' || type === 'VIDEO' ?(
             <FileImageVideo url={file.secure_url} type={type} />
-            ) : (<FileOthers file={file} type={type} />)
+            ) : (<FileOthers file={file} type={type} me={me}/>)
             }
           {/* <CustomMenu message={message} me={me} /> */}
           {/* Msg date */}
