@@ -15,7 +15,7 @@ export const Ringing = ({call, setCall}) => {
     if (timer < 10) {
       handleTimer();
     } else {
-      setCall({...call, receivingCall: false})
+      setCall({...call, receivingCall: false, signal: ''})
     }
     return () =>clearInterval(interval)
   }, [timer])

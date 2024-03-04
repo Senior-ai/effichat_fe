@@ -42,7 +42,6 @@ function ChatActions({socket}) {
 
     useEffect(() => {
         if (message.includes('https://tenor.com/')) {
-            console.log(message)
             MessageSender();    
         }
     }, [message])

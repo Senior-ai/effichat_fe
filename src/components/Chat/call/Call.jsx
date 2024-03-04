@@ -33,7 +33,7 @@ export const Call = ({ call, setCall, callAccepted, userVideo, myVideo, stream }
                             <video ref={userVideo} playsInline muted autoPlay className={`largeVideoCall`}></video>
                         </div>
                         {/* My vid */}
-                        {stream ? (
+                        {stream && (
                             <div>
                                 <video
                                     ref={myVideo}
@@ -44,7 +44,7 @@ export const Call = ({ call, setCall, callAccepted, userVideo, myVideo, stream }
                                         }`}
                                 ></video>
                             </div>
-                        ) : null}
+                        )}
                     </div>
                 </div>
             </div>

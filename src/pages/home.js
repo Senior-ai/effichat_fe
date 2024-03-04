@@ -31,10 +31,12 @@ function Home({ socket }) {
   const [call, setCall] = useState(callData);
   const [stream, setStream] = useState();
   const { receivingCall, callEnded, socketId } = call;
+  const [isCalling, setIsCalling] = useState(false);
   const [callAccepted, setCallAccepted] = useState(false);
   const [totalSecInCall, setTotalSecInCall] = useState(0);
   const myVideo = useRef();
   const userVideo = useRef();
+
   //get conversations & join user in socket
   useEffect(() => {
     socket.emit("join", user._id);
@@ -44,8 +46,7 @@ function Home({ socket }) {
     if (user?.token) {
       dispatch(getConversations(user.token));
     }
-  }, [user]);
-
+  }, []);
   //listening to received messages & Typing
   useEffect(() => {
     socket.on("message received", (message) => {
@@ -54,6 +55,7 @@ function Home({ socket }) {
     socket.on("typing", (conversation) => setTyping(conversation));
     socket.on("stop typing", () => setTyping(false));
   }, []);
+
   //Call
   useEffect(() => {
     setupMedia();
@@ -70,10 +72,19 @@ function Home({ socket }) {
         receivingCall: true,
       });
     });
+
+    socket.on("endCall", () => {
+      //setShow(false);
+      setCall({ ...call, callEnded: true, receiveingCall: false });
+      myVideo.current.srcObject = null;
+      // if (callAccepted) {
+      //   connectionRef?.current?.destroy();
+      // }
+    });
   }, []);
 
   const callUser = () => {
-    myVideo.current.srcObject = stream;
+    enableMedia();
     setCall({
       ...call,
       name: getRelevantName(user, activeConversation.users),
@@ -92,18 +103,23 @@ function Home({ socket }) {
         name: user.name,
         picture: user.picture,
       });
+
+      setIsCalling(true);
     });
   };
 
   const setupMedia = () => {
+    console.log('setupMedia')
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: true })
       .then((stream) => {
         setStream(stream);
-        myVideo.current.srcObject = stream;
       });
   };
-
+  const enableMedia = () => {
+    myVideo.current.srcObject = stream;
+    //setShow(true);
+  };
   return (
     <div className=" h-screen dark:bg-dark_bg_1 flex items-center justify-center py-[2px] w-full">
       {/* Container */}
@@ -119,15 +135,19 @@ function Home({ socket }) {
           <EffichatHome />
         )}
       </div>
-      <div className={(call.signal) && !call.callEnded ? "" : "hidden"}>
-      <Call
-        call={call}
-        setCall={setCall}
-        callAccepted={callAccepted}
-        userVideo={userVideo}
-        myVideo={myVideo}
-        stream={stream}
-      />
+      <div>
+        {isCalling ? (
+          <Call
+            call={call}
+            setCall={setCall}
+            callAccepted={callAccepted}
+            userVideo={userVideo}
+            myVideo={myVideo}
+            stream={stream}
+          />
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

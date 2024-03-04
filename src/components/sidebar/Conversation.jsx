@@ -39,9 +39,10 @@ function Conversation({ convo, socket, online, typing }) {
                                 <div className="flex-1 items-center gap-x-1 text-dark_text_1 dark:text-dark_text_2">
                                     {
                                         typing === convo._id? (
-                                        <p className='text-dark_text_1'>Typing...</p>) : 
-                                        convo.latestMessage.files.length > 0? (<p className='text-dark_text_1'>{convo.latestMessage.files[0].type}</p>) :
-                                        convo.latestMessage.message.includes('https://tenor.com/') ? ('GIF') :
+                                        <p className='text-dark_text_1'>Typing...</p>) :
+
+                                        convo?.latestMessage?.files.length > 0? (<p className='text-dark_text_1'>{convo.latestMessage.files[0].type}</p>) :
+                                        convo.latestMessage?.message.includes('https://tenor.com/') ? ('GIF') :
                                         (<p className={`${me? ('text-dark_text_4') : ('text-white')}`}>{convo.latestMessage?.message > 10 ? `${convo.latestMessage?.message.substring(0, 10)}..` :
                                         convo.latestMessage?.message}</p>)
                                     }

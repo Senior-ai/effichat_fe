@@ -14,23 +14,25 @@ import Register from "./pages/register";
 import ForgotPass from "./pages/forgotpass";
 import SocketContext from "./context/SocketContext";
 
-const socket = io(process.env.REACT_APP_API_ENDPOINT.split("/apiv1")[0]);
+const socket = io(process.env.REACT_APP_CLEAN_API_ENDPOINT);
 //In case Server endpoint changes in dev/prod enviornments - we shouldn't split the api endpoint
 function App() {
   const { user } = useSelector((state) => state.user);
   const token = user.token;
-
+  console.log()
   return (
-    <GoogleOAuthProvider clientId="519818168820-ur4sjskhrpkv7kkdhidlipgpdvcdeh93.apps.googleusercontent.com">
-      {/* //TODO - Make sure to change it to process.env,var and implement a way to register the user to db */}
-      <div className="">
-        <SocketContext.Provider value={socket}>
+    <SocketContext.Provider value={socket}>
+      <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+        {/* //TODO - Make sure to implement a way to register the user to db */}
+        <div className="">
           <Router>
             <Routes>
               <Route
                 exact
                 path="/"
-                element={token ? <Home socket={socket}/> : <Navigate to="/login" />}
+                element={
+                  token ? <Home socket={socket} /> : <Navigate to="/login" />
+                }
               />
               <Route
                 exact
@@ -45,9 +47,9 @@ function App() {
               <Route exact path="/forgotPass" element={<ForgotPass />} />
             </Routes>
           </Router>
-        </SocketContext.Provider>
-      </div>
-    </GoogleOAuthProvider>
+        </div>
+      </GoogleOAuthProvider>
+    </SocketContext.Provider>
   );
 }
 

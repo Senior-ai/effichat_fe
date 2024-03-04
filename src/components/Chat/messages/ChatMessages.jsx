@@ -17,19 +17,19 @@ export default function ChatMessages({ typing }) {
       <div className='scrollbar overflow_scrollbar overflow-auto px-[3%]'>
         {/* Messages */}
         {
-          messages && messages.map((message) => (
+          messages && messages.map((message, index) => (
             <>
               {
                 message.files.length > 0 ? 
                 message.files.map((file) => 
-                <FileMessage FileMessage={file} message={message} key={message._id} me={user._id === message.sender._id}/>) : null
+                <FileMessage FileMessage={file} message={message} key={index} me={user._id === message.sender._id}/>) : null
               }
               {
                 message.message.length > 0 ? 
                 (message.message.includes('https://tenor.com/') ? (
-                  <GifMessage message={message} me={user._id === message.sender._id} />
+                  <GifMessage message={message} me={user._id === message.sender._id} key={index}/>
                 ) :
-                (<Message message={message} key={message._id} me={user._id === message.sender._id} />))
+                (<Message message={message} key={index} me={user._id === message.sender._id} />))
                   : (null)
               }
             </>
