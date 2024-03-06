@@ -1,60 +1,76 @@
-import React, { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Ringing } from './Ringing'
 import { Header } from './Header';
 import { CallArea } from './CallArea';
 import { CallActions } from './CallActions';
+import Draggable from 'react-draggable';
 
-export const Call = ({ call, setCall, callAccepted, userVideo, myVideo, stream }) => {
+export const Call = ({ call, setCall, callAccepted, userVideo, myVideo, stream, setIsCalling, answerCall }) => {
     const { receivingCall, callEnded } = call;
     const [showActions, setShowActions] = useState(false);
-    console.log('receivingCall ', receivingCall, ' callAccepted: ', callAccepted);
-    if (receivingCall && !callAccepted) {
-        console.log('first')
-        console.log('receivingCall ', receivingCall, ' callAccepted: ', callAccepted);
-    } else {
-        console.log('wew')
-    }
+    const [timer, setTimer] = useState(0);
+    let interval;
+    const handleTimer = () => {
+        interval = setInterval(() => {
+            setTimer((prev) => prev + 1);
+        }, (1000));
+    };
+
+    useEffect(() => {
+        if (!callAccepted) {
+            if (timer < 10) {
+                handleTimer();
+            } else {
+                setIsCalling(false);
+                setCall({ ...call, receivingCall: false, signal: '' })
+            }
+            return () => clearInterval(interval)
+        }
+
+    }, [callAccepted])
+
     return (
         <>
-            <div className={`${receivingCall && !callAccepted ? 'hidden' : ''} fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[550px] z-10 
-    rounded-2xl overflow-hidden callbg`} onMouseOver={() => setShowActions(true)} onMouseOut={() => setShowActions(false)}>
-                {/* Container */}
-                <div>
-                    <div>
-                        {/* Header */}
-                        <Header />
-                        {/* Call Area */}
-                        <CallArea name={call.name} />
-                        {showActions ? <CallActions /> : ''}
-                    </div>
-                    {/* Stream */}
+            {
+                receivingCall && !callAccepted ? ('') : (<div className={`fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[550px] z-10 
+            rounded-2xl overflow-hidden callbg`} onMouseOver={() => setShowActions(true)} onMouseOut={() => setShowActions(false)}>
+                    {/* Container */}
                     <div>
                         <div>
-                            <video ref={userVideo} playsInline muted autoPlay className={`largeVideoCall`}></video>
+                            {/* Header */}
+                            <Header />
+                            {/* Call Area */}
+                            <CallArea name={call.name} /> {/* //TODO - i suggest to rename it to something more intuative like "CallInfo" */}
+                            {showActions ? <CallActions /> : ''}
                         </div>
-                        {/* My vid */}
-                        {stream && (
+                        {/* Stream */}
+                        <div>
                             <div>
-                                <video
-                                    ref={myVideo}
-                                    playsInline
-                                    muted
-                                    autoPlay
-                                    className={`SmallVideoCall ${showActions ? "moveVideoCall" : ""
-                                        }`}
-                                ></video>
+                                <video ref={userVideo} playsInline muted autoPlay className={`largeVideoCall`}></video> {/* //TODO -remove unnecessary closing tags */}
                             </div>
-                        )}
+                            {/* My vid */}
+                            {stream && (
+                                <div> {/* //TODO - Check if any divs are unnecesery and remove if needed */}
+                                    <video
+                                        ref={myVideo}
+                                        playsInline
+                                        muted
+                                        autoPlay
+                                        className={`SmallVideoCall ${showActions ? "moveVideoCall" : ""
+                                            }`}
+                                    />
+                                </div>
+                            )}
+                        </div>
                     </div>
-                </div>
-            </div>
+                </div>)
+            }
             {/* Ringing */}
             {
                 receivingCall && !callAccepted ? (
-                    <Ringing call={call} setCall={setCall} />
+                    <Ringing call={call} answerCall={answerCall} />
                 ) : ('')
             }
-
         </>
     )
 }

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import ChatMessages from './messages/ChatMessages';
 import { getConversationMessages } from '../../features/chatSlice';
 import ChatActions from './actions/ChatActions';
-import { checkOnlineStatus, getConversationId } from '../../utils/chat';
+import { checkOnlineStatus } from '../../utils/chat';
 import { FilePreview } from './preview/files/FilePreview';
 
 export default function ChatContainer({onlineUsers, typing, callUser}) {

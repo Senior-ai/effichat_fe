@@ -1,24 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { IoMdClose, IoMdCheckmark } from 'react-icons/io'
 import ringing from '../../../audio/ringtone.mp3'
-export const Ringing = ({call, setCall}) => {
-  const {receivingCall, callEnded} = call;
-  const [timer,setTimer] = useState(0);
-  let interval;
-  const handleTimer = () => {
-    interval = setInterval(() => {
-      setTimer((prev) => prev+1);
-    }, (1000));
-  };
-
-  useEffect(() => {
-    if (timer < 10) {
-      handleTimer();
-    } else {
-      setCall({...call, receivingCall: false, signal: ''})
-    }
-    return () =>clearInterval(interval)
-  }, [timer])
+export const Ringing = ({call, answerCall}) => {
   return (
     <div className='bg-indigo-400 rounded-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-lg z-30 '>
       {/* Container */}
@@ -39,7 +22,7 @@ export const Ringing = ({call, setCall}) => {
             <button className='w-8 h-8 flex items-center justify-center rounded-full bg-red-500'>
               <IoMdClose color='white' size={28}/>
             </button>
-            <button className='w-8 h-8 flex items-center justify-center rounded-full bg-green-500 mt-2'>
+            <button className='w-8 h-8 flex items-center justify-center rounded-full bg-green-500 mt-2' onClick={() => answerCall()}>
               <IoMdCheckmark color='white' size={28}/>
             </button>
           </li>

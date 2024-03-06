@@ -19,6 +19,7 @@
     "moment": "^2.30.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-draggable": "^4.4.6",
     "react-file-icon": "^1.4.0",
     "react-hook-form": "^7.49.3",
     "react-icons": "^5.0.1",

@@ -19,7 +19,7 @@ const socket = io(process.env.REACT_APP_CLEAN_API_ENDPOINT);
 function App() {
   const { user } = useSelector((state) => state.user);
   const token = user.token;
-  console.log()
+
   return (
     <SocketContext.Provider value={socket}>
       <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>

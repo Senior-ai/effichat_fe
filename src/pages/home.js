@@ -11,6 +11,7 @@ import { ChatContainer, EffichatHome } from "./../components/Chat/index.js";
 import { Sidebar } from "../components/sidebar/index.js";
 import { Call } from "../components/Chat/call/Call.jsx";
 import Peer from "simple-peer";
+import { Ringing } from "../components/Chat/call/Ringing.jsx";
 
 const callData = {
   socketId: "",
@@ -32,10 +33,12 @@ function Home({ socket }) {
   const [stream, setStream] = useState();
   const { receivingCall, callEnded, socketId } = call;
   const [isCalling, setIsCalling] = useState(false);
+  const [show, setShow] = useState(false);
   const [callAccepted, setCallAccepted] = useState(false);
   const [totalSecInCall, setTotalSecInCall] = useState(0);
   const myVideo = useRef();
   const userVideo = useRef();
+  const connectionRef = useRef();
 
   //get conversations & join user in socket
   useEffect(() => {
@@ -58,11 +61,11 @@ function Home({ socket }) {
 
   //Call
   useEffect(() => {
-    setupMedia();
     socket.on("setupSocket", (id) => {
       setCall({ ...call, socketId: id });
     });
     socket.on("callUser", (data) => {
+      setIsCalling(true);
       setCall({
         ...call,
         socketId: data.from,
@@ -95,6 +98,7 @@ function Home({ socket }) {
       trickle: false,
       stream: stream,
     });
+
     peer.on("signal", (data) => {
       socket.emit("callUser", {
         userToCall: getConversationId(user, activeConversation.users),
@@ -103,23 +107,63 @@ function Home({ socket }) {
         name: user.name,
         picture: user.picture,
       });
-
       setIsCalling(true);
     });
+
+    peer.on("stream", (stream) => {
+      userVideo.current.srcObject = stream;
+    });
+
+    socket.on("anserCall", (signal) => {
+      setCallAccepted(true);
+      peer.signal(signal);
+    });
+    connectionRef.current = peer;
   };
 
-  const setupMedia = () => {
-    console.log('setupMedia')
-    navigator.mediaDevices
-      .getUserMedia({ video: true, audio: true })
-      .then((stream) => {
-        setStream(stream);
-      });
+  const answerCall = () => {
+    enableMedia();
+    setCallAccepted(true);
+    const peer = new Peer({
+      initiator: false,
+      trickle: false,
+      stream: stream,
+    });
+    peer.on("signal", (data) => {
+      socket.emit("answerCall", { signal: data, to: call.socketId });
+    });
+    peer.on("stream", (stream) => {
+      userVideo.current.srcObject = stream;
+    });
+    peer.signal(call.signal);
+    connectionRef.current = peer;
   };
+
+  useEffect(() => {
+    const setupMedia = () => {
+      navigator.mediaDevices
+        .getUserMedia({ video: true, audio: true })
+        .then((newStream) => {
+          setStream(newStream);
+          if (myVideo.current) {
+            console.log("yeah");
+            myVideo.current.srcObject = newStream;
+          }
+        });
+    };
+    // Call setupMedia function when receiving a call or when calling a user
+    if (receivingCall || isCalling) {
+      setupMedia();
+    }
+  }, [receivingCall, isCalling]);
+
   const enableMedia = () => {
-    myVideo.current.srcObject = stream;
-    //setShow(true);
+    if (myVideo.current) {
+      myVideo.current.srcObject = stream;
+    }
+    setShow(true);
   };
+
   return (
     <div className=" h-screen dark:bg-dark_bg_1 flex items-center justify-center py-[2px] w-full">
       {/* Container */}
@@ -135,20 +179,18 @@ function Home({ socket }) {
           <EffichatHome />
         )}
       </div>
-      <div>
-        {isCalling ? (
-          <Call
-            call={call}
-            setCall={setCall}
-            callAccepted={callAccepted}
-            userVideo={userVideo}
-            myVideo={myVideo}
-            stream={stream}
-          />
-        ) : (
-          ""
-        )}
-      </div>
+      {isCalling && (
+        <Call
+          call={call}
+          setIsCalling={setIsCalling}
+          setCall={setCall}
+          callAccepted={callAccepted}
+          userVideo={userVideo}
+          myVideo={myVideo}
+          stream={stream}
+          answerCall={answerCall}
+        />
+      )}
     </div>
   );
 }
@@ -158,4 +200,5 @@ const HomeWithSocket = (props) => (
     {(socket) => <Home {...props} socket={socket} />}
   </SocketContext.Consumer>
 );
+
 export default HomeWithSocket;
