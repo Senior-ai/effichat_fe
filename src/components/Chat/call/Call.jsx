@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react'
 import { Ringing } from './Ringing'
 import { Header } from './Header';
-import { CallArea } from './CallArea';
+import { CallInfo } from './CallInfo';
 import { CallActions } from './CallActions';
 import Draggable from 'react-draggable';
 
 export const Call = ({ call, setCall, callAccepted, userVideo, myVideo, stream, setIsCalling, answerCall }) => {
     const { receivingCall, callEnded } = call;
     const [showActions, setShowActions] = useState(false);
+    const [toggle, setToggle] = useState(false);
     const [timer, setTimer] = useState(0);
     let interval;
     const handleTimer = () => {
@@ -29,6 +30,7 @@ export const Call = ({ call, setCall, callAccepted, userVideo, myVideo, stream, 
 
     }, [callAccepted])
 
+
     return (
         <>
             {
@@ -40,14 +42,14 @@ export const Call = ({ call, setCall, callAccepted, userVideo, myVideo, stream, 
                             {/* Header */}
                             <Header />
                             {/* Call Area */}
-                            <CallArea name={call.name} /> {/* //TODO - i suggest to rename it to something more intuative like "CallInfo" */}
+                            <CallInfo name={call.name} callAccepted={callAccepted} /> {/* //TODO - i suggest to rename it to something more intuative like "CallInfo" */}
                             {showActions ? <CallActions /> : ''}
                         </div>
                         {/* Stream */}
                         <div>
-                            <div>
-                                <video ref={userVideo} playsInline muted autoPlay className={`largeVideoCall`}></video> {/* //TODO -remove unnecessary closing tags */}
-                            </div>
+                            {callAccepted && !callEnded && (<div>
+                                <video ref={userVideo} playsInline muted autoPlay className={`largeVideoCall`} /> {/* //TODO -remove unnecessary closing tags */}
+                            </div>)}
                             {/* My vid */}
                             {stream && (
                                 <div> {/* //TODO - Check if any divs are unnecesery and remove if needed */}

@@ -30,7 +30,7 @@ function Home({ socket }) {
   const [typing, setTyping] = useState(false);
   //call
   const [call, setCall] = useState(callData);
-  const [stream, setStream] = useState();
+  const [stream, setStream] = useState(null);
   const { receivingCall, callEnded, socketId } = call;
   const [isCalling, setIsCalling] = useState(false);
   const [show, setShow] = useState(false);
