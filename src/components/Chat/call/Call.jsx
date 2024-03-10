@@ -42,17 +42,17 @@ export const Call = ({ call, setCall, callAccepted, userVideo, myVideo, stream, 
                             {/* Header */}
                             <Header />
                             {/* Call Area */}
-                            <CallInfo name={call.name} callAccepted={callAccepted} /> {/* //TODO - i suggest to rename it to something more intuative like "CallInfo" */}
+                            <CallInfo name={call.name} callAccepted={callAccepted} />
                             {showActions ? <CallActions /> : ''}
                         </div>
                         {/* Stream */}
                         <div>
                             {callAccepted && !callEnded && (<div>
-                                <video ref={userVideo} playsInline muted autoPlay className={`largeVideoCall`} /> {/* //TODO -remove unnecessary closing tags */}
+                                <video ref={userVideo} playsInline muted autoPlay className={`largeVideoCall`} />
                             </div>)}
                             {/* My vid */}
                             {stream && (
-                                <div> {/* //TODO - Check if any divs are unnecesery and remove if needed */}
+                                <div>
                                     <video
                                         ref={myVideo}
                                         playsInline

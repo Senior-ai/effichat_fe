@@ -114,7 +114,7 @@ function Home({ socket }) {
       userVideo.current.srcObject = stream;
     });
 
-    socket.on("anserCall", (signal) => {
+    socket.on("answerCall", (signal) => {
       setCallAccepted(true);
       peer.signal(signal);
     });
@@ -122,6 +122,7 @@ function Home({ socket }) {
   };
 
   const answerCall = () => {
+    console.log("to:", call.socketId);
     enableMedia();
     setCallAccepted(true);
     const peer = new Peer({
@@ -146,13 +147,14 @@ function Home({ socket }) {
         .then((newStream) => {
           setStream(newStream);
           if (myVideo.current) {
-            console.log("yeah");
             myVideo.current.srcObject = newStream;
           }
         });
     };
     // Call setupMedia function when receiving a call or when calling a user
-    if (receivingCall || isCalling) {
+    if (isCalling) {
+      setupMedia();
+    } else if (receivingCall && callAccepted) {
       setupMedia();
     }
   }, [receivingCall, isCalling]);

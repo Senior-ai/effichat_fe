@@ -2,6 +2,7 @@ import React from 'react'
 import { capitalize } from '../../../utils/string'
 
 export const CallInfo = ({ name, callAccepted }) => {
+  console.log(callAccepted)
   return (
     <div className='absolute top-12 w-full p-1 z-40'>
       <div className='flex flex-col items-center'>
