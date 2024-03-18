@@ -48,7 +48,7 @@ export const Call = ({ call, setCall, callAccepted, userVideo, myVideo, stream, 
                         {/* Stream */}
                         <div>
                             {callAccepted && !callEnded && (<div>
-                                <video ref={userVideo} playsInline muted autoPlay className={`largeVideoCall`} />
+                                <video ref={userVideo} playsInline muted autoPlay className={!toggle ? 'SmallVideoCall' : 'largeVideoCall'} />
                             </div>)}
                             {/* My vid */}
                             {stream && (
@@ -58,8 +58,9 @@ export const Call = ({ call, setCall, callAccepted, userVideo, myVideo, stream, 
                                         playsInline
                                         muted
                                         autoPlay
-                                        className={`SmallVideoCall ${showActions ? "moveVideoCall" : ""
+                                        className={`${toggle ? 'largeVideoCall' : 'SmallVideoCall'} ${showActions ? "moveVideoCall" : ""
                                             }`}
+                                        onClick={() => setToggle((prev) => !prev)}
                                     />
                                 </div>
                             )}

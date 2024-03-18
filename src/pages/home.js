@@ -61,6 +61,7 @@ function Home({ socket }) {
 
   //Call
   useEffect(() => {
+    enableMedia();
     socket.on("setupSocket", (id) => {
       setCall({ ...call, socketId: id });
     });
@@ -77,12 +78,12 @@ function Home({ socket }) {
     });
 
     socket.on("endCall", () => {
-      //setShow(false);
+      setShow(false);
       setCall({ ...call, callEnded: true, receiveingCall: false });
       myVideo.current.srcObject = null;
-      // if (callAccepted) {
-      //   connectionRef?.current?.destroy();
-      // }
+      if (callAccepted) {
+        connectionRef?.current?.destroy();
+      }
     });
   }, []);
 
@@ -114,7 +115,7 @@ function Home({ socket }) {
       userVideo.current.srcObject = stream;
     });
 
-    socket.on("answerCall", (signal) => {
+    socket.on("callAccepted", (signal) => {
       setCallAccepted(true);
       peer.signal(signal);
     });
@@ -122,7 +123,6 @@ function Home({ socket }) {
   };
 
   const answerCall = () => {
-    console.log("to:", call.socketId);
     enableMedia();
     setCallAccepted(true);
     const peer = new Peer({
@@ -146,9 +146,6 @@ function Home({ socket }) {
         .getUserMedia({ video: true, audio: true })
         .then((newStream) => {
           setStream(newStream);
-          if (myVideo.current) {
-            myVideo.current.srcObject = newStream;
-          }
         });
     };
     // Call setupMedia function when receiving a call or when calling a user
