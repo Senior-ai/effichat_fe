@@ -2,7 +2,7 @@ import React from 'react'
 import { IoIosArrowUp } from 'react-icons/io'
 import { HiOutlineSpeakerWave, HiOutlineVideoCamera } from 'react-icons/hi2'
 import { AiOutlineAudioMuted, AiOutlinePhone } from "react-icons/ai";
-export const CallActions = () => {
+export const CallActions = ({ endCall }) => {
     return (
         <div className='h-[88px] w-full absolute z-40 px-1 bottom-0'>
             <div className='relative bg-[#222222b6] px-4 pt-6 pb-12 rounded-xl'>
@@ -26,7 +26,7 @@ export const CallActions = () => {
                         </button>
                     </li>
                     <li>
-                        <button className='btn_secondary bg-red-500 rotate-[-135deg]'>
+                        <button className='btn_secondary bg-red-500 rotate-[-135deg]' onClick={() => endCall()}>
                             <AiOutlinePhone color='white' size={26} />
                         </button>
                     </li>

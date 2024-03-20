@@ -3,9 +3,9 @@ import { Ringing } from './Ringing'
 import { Header } from './Header';
 import { CallInfo } from './CallInfo';
 import { CallActions } from './CallActions';
-import Draggable from 'react-draggable';
+import ringingAudio from '../../../audio/ringing.mp3'
 
-export const Call = ({ call, setCall, callAccepted, userVideo, myVideo, stream, setIsCalling, answerCall }) => {
+export const Call = ({ call, setCall, callAccepted, userVideo, myVideo, stream, setIsCalling, answerCall, show, endCall }) => {
     const { receivingCall, callEnded } = call;
     const [showActions, setShowActions] = useState(false);
     const [toggle, setToggle] = useState(false);
@@ -43,12 +43,13 @@ export const Call = ({ call, setCall, callAccepted, userVideo, myVideo, stream, 
                             <Header />
                             {/* Call Area */}
                             <CallInfo name={call.name} callAccepted={callAccepted} />
-                            {showActions ? <CallActions /> : ''}
+                            {showActions ? <CallActions endCall={endCall} /> : ''}
                         </div>
                         {/* Stream */}
                         <div>
                             {callAccepted && !callEnded && (<div>
-                                <video ref={userVideo} playsInline muted autoPlay className={!toggle ? 'SmallVideoCall' : 'largeVideoCall'} />
+                                <video ref={userVideo} playsInline muted autoPlay className={toggle ? 'SmallVideoCall' : 'largeVideoCall'}
+                                    onClick={() => setToggle((prev) => !prev)} />
                             </div>)}
                             {/* My vid */}
                             {stream && (
@@ -71,8 +72,11 @@ export const Call = ({ call, setCall, callAccepted, userVideo, myVideo, stream, 
             {/* Ringing */}
             {
                 receivingCall && !callAccepted ? (
-                    <Ringing call={call} answerCall={answerCall} />
+                    <Ringing call={call} answerCall={answerCall} endCall={endCall} />
                 ) : ('')
+            }
+            {
+                !callAccepted && show && <audio src={ringingAudio} autoPlay loop />
             }
         </>
     )

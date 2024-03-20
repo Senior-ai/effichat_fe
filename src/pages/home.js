@@ -11,7 +11,6 @@ import { ChatContainer, EffichatHome } from "./../components/Chat/index.js";
 import { Sidebar } from "../components/sidebar/index.js";
 import { Call } from "../components/Chat/call/Call.jsx";
 import Peer from "simple-peer";
-import { Ringing } from "../components/Chat/call/Ringing.jsx";
 
 const callData = {
   socketId: "",
@@ -80,10 +79,12 @@ function Home({ socket }) {
     socket.on("endCall", () => {
       setShow(false);
       setCall({ ...call, callEnded: true, receiveingCall: false });
-      myVideo.current.srcObject = null;
-      if (callAccepted) {
-        connectionRef?.current?.destroy();
+      setIsCalling(false);
+      setCallAccepted(false);
+      if (myVideo.current) {
+        myVideo.current.srcObject = null;
       }
+      connectionRef?.current?.destroy();
     });
   }, []);
 
@@ -140,6 +141,20 @@ function Home({ socket }) {
     connectionRef.current = peer;
   };
 
+  const endCall = () => {
+    setCall({ ...call, callEnded: true, receivingCall: false });
+    setShow(false);
+    socket.emit("endCall", call.socketId);
+    setIsCalling(false);
+    setCallAccepted(false);
+    if (myVideo.current) {
+      myVideo.current.srcObject = null;
+    }
+    if (connectionRef.current) {
+      connectionRef.current.destroy();
+    }
+  };
+
   useEffect(() => {
     const setupMedia = () => {
       navigator.mediaDevices
@@ -188,6 +203,8 @@ function Home({ socket }) {
           myVideo={myVideo}
           stream={stream}
           answerCall={answerCall}
+          endCall={endCall}
+          show={show}
         />
       )}
     </div>
