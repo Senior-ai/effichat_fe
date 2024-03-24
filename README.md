@@ -1,23 +1,13 @@
-# Getting Started with Create React App
+# Getting Started with EffiChat
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![image](https://github.com/Senior-ai/effichat_fe/assets/68730456/38f86280-737d-4055-a17d-6e8a5b83bc2f)
 
-## Available Scripts
-
-In the project directory, you can run:
-
+In the project directory, run:
 ### `npm start`
+To Run locally the backend:
+### `npm run dev`
 
-Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 
