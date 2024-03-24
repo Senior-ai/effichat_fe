@@ -75,9 +75,6 @@ export const Call = ({ call, setCall, callAccepted, userVideo, myVideo, stream, 
                     <Ringing call={call} answerCall={answerCall} endCall={endCall} />
                 ) : ('')
             }
-            {
-                !callAccepted && show && <audio src={ringingAudio} autoPlay loop />
-            }
         </>
     )
 }

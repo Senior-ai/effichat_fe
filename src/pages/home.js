@@ -84,7 +84,9 @@ function Home({ socket }) {
       if (myVideo.current) {
         myVideo.current.srcObject = null;
       }
-      connectionRef?.current?.destroy();
+      if (callAccepted && !callEnded) {
+        connectionRef?.current?.destroy();
+      }
     });
   }, []);
 
